@@ -10,17 +10,17 @@ Seventh one will be /paradox whereby the app puts a random paradox in the grid.
 Eighth one will be /insanity whereby the app scrambles letters. And doesn't stop. And becomes unresponsive.
 Ninth one will be /discoball whereby the buttons clearly are influenced by a disco ball.
 Tenth one will be /fire (countered by /extinguisher)
-Eleventh one will be /unreveal(x,y)
+Eleventh one will be /unreveal(x,y) [self explanatory]
 Twelwth one will be /story whereby the app takes "once", "upon", "a" and "time" and places them in the grid.
 ---UNDER DEVELOPMENT Thirteenth one will be /glass whereby the app takes "half" and "full" or "empty" and places them in the grid.
-Fourteenth one will be /app
-Fifteenth one will be /random
-Sixteenth one will be /pinball
-Seventeenth one will be /machinegun
+Fourteenth one will be /app whereby the app hides correct amount of button columns to the left and right.
+Fifteenth one will be /random whereby the app suggests a word from random.txt.
+Sixteenth one will be /pinball whereby player 1 controls flipper control left and player 2 controls flipper control right.
+Seventeenth one will be /machinegun whereby gun sound effects are added to keypresses.
 Eighteenth one will be /wokeshit whereby the app suggests some fucking pronoun.
-Nineteenth one will be /airwolf
-Twentieth one will be /reaction
-Twentyfirst one will be /echochamber
+Nineteenth one will be /airwolf whereby the app displays airwolf and the melody plays on each key press.
+Twentieth one will be /reaction [I seriously don't remember]
+Twentyfirst one will be /echochamber whereby each key press echoes for both players.
 
 /quote(southpark)
 /quote(simpsons)
