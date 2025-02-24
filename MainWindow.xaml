@@ -159,7 +159,7 @@
 
             <TextBox x:Name="inputBox" 
                      TextWrapping="NoWrap" 
-                     Text="37.250.192.33" 
+                     Text="127.0.0.1" 
                      HorizontalAlignment="Left"
                      Margin="100,15,0,0"
                      Width="190" 
