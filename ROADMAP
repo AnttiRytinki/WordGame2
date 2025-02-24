@@ -1,23 +1,23 @@
 Will add cheatcodes that all start with /
 
-First one will be /pythagoras
-Next one will be /tetris
-Third one will be /ai
-Fourth one will be /wait(milliseconds)
-Fifth one will be /censorship
-Sixth one will be /hitler
-Seventh one will be /paradox
-Eight one will be /insanity
-Ninth one will be /discoball
+First one will be /pythagoras whereby the app reduces the grid to a random triangle and the players quickly have to respond with the length of the hypothenuse.
+Next one will be /tetris whereby the app becomes tetris and it plays the melody notes one by one as the players play tetris with the words.
+Third one will be /ai whereby the app suggests synonyms all the time.
+Fourth one will be /wait(milliseconds) whereby the app displays the circle loading thingy for that amount of time for both players.
+Fifth one will be /censorship whereby the app allows both players to use the arrow keys to guide the censorship...
+Sixth one will be /hitler whereby the app plays a random hitler audio sample.
+Seventh one will be /paradox whereby the app puts a random paradox in the grid.
+Eighth one will be /insanity whereby the app scrambles letters. And doesn't stop. And becomes unresponsive.
+Ninth one will be /discoball whereby the buttons clearly are influenced by a disco ball.
 Tenth one will be /fire (countered by /extinguisher)
 Eleventh one will be /unreveal(x,y)
-Twelwth one will be /story
+Twelwth one will be /story whereby the app takes "once", "upon", "a" and "time" and places them in the grid.
 ---UNDER DEVELOPMENT Thirteenth one will be /glass whereby the app takes "half" and "full" or "empty" and places them in the grid.
 Fourteenth one will be /app
 Fifteenth one will be /random
 Sixteenth one will be /pinball
 Seventeenth one will be /machinegun
-Eighteenth one will be /wokeshit
+Eighteenth one will be /wokeshit whereby the app suggests some fucking pronoun.
 Nineteenth one will be /airwolf
 Twentieth one will be /reaction
 Twentyfirst one will be /echochamber
