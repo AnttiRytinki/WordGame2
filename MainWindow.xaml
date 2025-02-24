@@ -1,0 +1,171 @@
+﻿<Window x:Class="OrdSpel2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OrdSpel2"
+        mc:Ignorable="d"
+        Title="OrdSpel 2" Height="500" Width="330"
+        ResizeMode="NoResize">
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Width="30">
+                    <Button x:Name="b00" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b01" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b02" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b03" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b04" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b05" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b06" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b07" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b08" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b09" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                </StackPanel>
+
+                <StackPanel Width="30">
+                    <Button x:Name="b10" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b11" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b12" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b13" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b14" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b15" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b16" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b17" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b18" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b19" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                </StackPanel>
+
+                <StackPanel Width="30">
+                    <Button x:Name="b20" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b21" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b22" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b23" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b24" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b25" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b26" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b27" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b28" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b29" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                </StackPanel>
+
+                <StackPanel Width="30">
+                    <Button x:Name="b30" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b31" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b32" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b33" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b34" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b35" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b36" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b37" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b38" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b39" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                </StackPanel>
+
+                <StackPanel Width="30">
+                    <Button x:Name="b40" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b41" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b42" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b43" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b44" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b45" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b46" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b47" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b48" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b49" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                </StackPanel>
+
+                <StackPanel Width="30">
+                    <Button x:Name="b50" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b51" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b52" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b53" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b54" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b55" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b56" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b57" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b58" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b59" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                </StackPanel>
+
+                <StackPanel Width="30">
+                    <Button x:Name="b60" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b61" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b62" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b63" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b64" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b65" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b66" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b67" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b68" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b69" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                </StackPanel>
+
+                <StackPanel Width="30">
+                    <Button x:Name="b70" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b71" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b72" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b73" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b74" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b75" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b76" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b77" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b78" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b79" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                </StackPanel>
+
+                <StackPanel Width="30">
+                    <Button x:Name="b80" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b81" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b82" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b83" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b84" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b85" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b86" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b87" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b88" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b89" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                </StackPanel>
+
+                <StackPanel Width="30">
+                    <Button x:Name="b90" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b91" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b92" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b93" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b94" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b95" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b96" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b97" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b98" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                    <Button x:Name="b99" Content="" PreviewMouseDown="Button_Click" Height="30" FontSize="20"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="chatBox" 
+                     TextWrapping="NoWrap" 
+                     Width="200" 
+                     Height="85"
+                     HorizontalAlignment="Left"
+                     Margin="5,20,0,0"
+                     IsReadOnly="True"
+                     FontSize="20"/>
+
+                <StackPanel Width="100" Margin="0,10,0,0">
+                    <Line Stretch="Fill" Stroke="#FFEC1111" X1="0" Y1="0" X2="0" Y2="60" StrokeThickness="15" />
+                    <Line Stretch="Fill" Stroke="#FF11EC65" X1="0" Y1="0" X2="1" Y2="0" StrokeThickness="15" />
+                </StackPanel>
+            </StackPanel>
+
+            <TextBox x:Name="inputBox" 
+                     TextWrapping="NoWrap" 
+                     Text="37.250.192.33" 
+                     HorizontalAlignment="Left"
+                     Margin="100,15,0,0"
+                     Width="190" 
+                     Height="35"
+                     FontSize="20"
+                     KeyDown="inputBox_KeyDown"/>
+        </StackPanel>
+    </Grid>
+</Window>
