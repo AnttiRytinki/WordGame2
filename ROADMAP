@@ -22,6 +22,9 @@ Nineteenth one will be /airwolf whereby the app displays airwolf and the melody 
 Twentieth one will be /reaction whereby the app starts the reaction minigame.
 Twentyfirst one will be /echochamber whereby each key press echoes for both players.
 
+Twentysecondth one will be /morsecode whereby the app replaces hidden words with morse equivalent.
+Twentythirdth one will be /nato whereby the app plays nato alphabet wav file upon button press.
+
 /quote(southpark)
 /quote(simpsons)
 /quote(familyguy)
