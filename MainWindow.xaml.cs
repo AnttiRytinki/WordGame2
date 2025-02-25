@@ -1,18 +1,7 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace OrdSpel2
 {
@@ -21,8 +10,12 @@ namespace OrdSpel2
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Helpers Helpers { get; set; } = new Helpers();
+        
         public GameState GameState { get; set; } = new GameState();
         public GameCom GameCom { get; set; } = new GameCom();
+
+        public BoardHandler BoardHandler { get; set; }
 
         int _lastClickedX = 0;
         int _lastClickedY = 0;
@@ -35,6 +28,8 @@ namespace OrdSpel2
 
             SetButtonProperties();
             SetAllButtons(false);
+
+            BoardHandler = new BoardHandler(Helpers, GameState);
         }
 
         private void SetAllButtons(bool enabled)
@@ -207,7 +202,7 @@ namespace OrdSpel2
 
                 else if (GameState.Phase == "[PHASE1]")
                 {
-                    bool canAddToBoard = CanAddToBoard(((TextBox)sender).Text);
+                    bool canAddToBoard = BoardHandler.CanAddToBoard(((TextBox)sender).Text);
 
                     if (canAddToBoard == false || WillBoardCoverageBeAbove(50, ((TextBox)sender).Text))
                     {
@@ -229,7 +224,7 @@ namespace OrdSpel2
                         return;
                     }
 
-                    AddToBoard(((TextBox)sender).Text);
+                    BoardHandler.AddToBoard(((TextBox)sender).Text);
 
                     AddToChatBox(((TextBox)sender).Text);
 
@@ -345,14 +340,14 @@ namespace OrdSpel2
 
             if (GameCom.GameServer != null)
             {
-                AddToChatBox("Jag: " + GameState.PointsPlayerA.ToString());
-                AddToChatBox("Motst: " + GameState.PointsPlayerB.ToString());
+                AddToChatBox("Me: " + GameState.PointsPlayerA.ToString());
+                AddToChatBox("Opp: " + GameState.PointsPlayerB.ToString());
             }
 
             else if (GameCom.GameClient != null)
             {
-                AddToChatBox("Jag: " + GameState.PointsPlayerB.ToString());
-                AddToChatBox("Motst: " + GameState.PointsPlayerA.ToString());
+                AddToChatBox("Me: " + GameState.PointsPlayerB.ToString());
+                AddToChatBox("Opp: " + GameState.PointsPlayerA.ToString());
             }
         }
 
@@ -367,152 +362,6 @@ namespace OrdSpel2
             }
 
             chatBox.Text += text + "\n";
-        }
-
-        private bool CanAddToBoard(string text)
-        {
-            bool canAdd;
-
-            for (int i = 0; i < 100; i++)
-            {
-                Random rnd = new Random();
-                int x = rnd.Next(0, 9);
-                int y = rnd.Next(0, 9);
-                bool right = RandBool();
-
-                try
-                {
-                    canAdd = TryAddToBoard(x, y, right, text, true);
-                }
-                catch
-                {
-                    continue;
-                }
-
-                if (canAdd)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool AddToBoard(string text)
-        {
-            bool success;
-
-            for (int i = 0; i < 100; i++)
-            {
-                Random rnd = new Random();
-                int x = rnd.Next(0, 9);
-                int y = rnd.Next(0, 9);
-                bool right = RandBool();
-
-                try
-                {
-                    success = TryAddToBoard(x, y, right, text, false);
-                }
-                catch
-                {
-                    continue;
-                }
-
-                if (success)
-                {
-                    GameState.WordList.Add(new Word(x, y, text, right));
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool TryAddToBoard(int x, int y, bool right, string text, bool test)
-        {
-            if (right)
-            {
-                if (BoardSpaceRightIsEmpty(x, y, text.Length))
-                {
-                    if (!test)
-                        PutStringInBoardRight(x, y, text);
-
-                    return true;
-                }
-
-                else
-                    return false;
-            }
-
-            else
-            {
-                if (BoardSpaceDownIsEmpty(x, y, text.Length))
-                {
-                    if (!test)
-                        PutStringInBoardDown(x, y, text);
-
-                    return true;
-                }
-
-                else
-                    return false;
-            }
-        }
-
-        private void PutStringInBoardRight(int x, int y, string text)
-        {
-            for (int X = x; X < (text.Length + x); X++)
-            {
-                GameState.Board[y] = ReplaceAt(GameState.Board[y], X, text[X - x]);
-            }
-        }
-
-        private bool BoardSpaceRightIsEmpty(int x, int y, int length)
-        {
-            for (int X = x; X < (length + x); X++)
-            {
-                if (GameState.Board[y][X] != (char)32)
-                    return false;
-            }
-
-            return true;
-        }
-
-        private void PutStringInBoardDown(int x, int y, string text)
-        {
-            for (int Y = y; Y < (text.Length + y); Y++)
-            {
-                GameState.Board[Y] = ReplaceAt(GameState.Board[Y], x, text[Y - y]);
-            }
-        }
-
-        private bool BoardSpaceDownIsEmpty(int x, int y, int length)
-        {
-            for (int Y = y; Y < (length + y); Y++)
-            {
-                if (GameState.Board[Y][x] != (char)32)
-                    return false;
-            }
-
-            return true;
-        }
-
-        private bool RandBool()
-        {
-            var random = new Random();
-            return random.Next(2) == 1;
-        }
-
-        public string ReplaceAt(string input, int index, char newChar)
-        {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
-            char[] chars = input.ToCharArray();
-            chars[index] = newChar;
-            return new string(chars);
         }
     }
 }
