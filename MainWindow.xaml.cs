@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,7 +13,7 @@ namespace OrdSpel2
     public partial class MainWindow : Window
     {
         public Helpers Helpers { get; set; } = new Helpers();
-        
+
         public GameState GameState { get; set; } = new GameState();
         public GameCom GameCom { get; set; } = new GameCom();
 
@@ -21,6 +23,11 @@ namespace OrdSpel2
         int _lastClickedY = 0;
 
         bool _buttonsEnabled = false;
+
+        bool _natoWav = false;
+        List<ISampleProvider> selectedSamples = new List<ISampleProvider>();
+        ConcatenatingSampleProvider fullAudio;
+        WaveOutEvent player = new WaveOutEvent();
 
         public MainWindow()
         {
@@ -142,13 +149,20 @@ namespace OrdSpel2
 
         private void inputBox_KeyDown(object sender, KeyEventArgs e)
         {
+            if (_natoWav)
+                handleQWERTYAudio(e.Key);
+
             if (e.Key == Key.Enter)
             {
                 inputBox.Background = Brushes.White;
+                string text = ((TextBox)sender).Text;
 
-                if (((TextBox)sender).Text == "")
+                if (text == $"/NATO")
+                    _natoWav = true;
+
+                if (text == "")
                 {
-                    if(GameState.Phase == "[PHASE2]")
+                    if (GameState.Phase == "[PHASE2]")
                     {
                         GameState.LetterWasRevealed = false;
                         SetAllButtons(false);
@@ -169,13 +183,13 @@ namespace OrdSpel2
                         return;
                 }
 
-                else if (((TextBox)sender).Text.Contains(" "))
+                else if (text.Contains(" "))
                     return;
 
-                else if (((TextBox)sender).Text.Contains("startserver"))
+                else if (text.Contains("startserver"))
                 {
                     GameCom.InitServer();
-                    GameCom.GameServer.StringReceivedEvent += StringReceivedEvent;
+                    GameCom.GameServer.StringReceivedEvent += StringReceived;
 
                     inputBox.Text = "";
 
@@ -186,10 +200,10 @@ namespace OrdSpel2
                     return;
                 }
 
-                else if (Char.IsDigit(((TextBox)sender).Text[0]))
+                else if (Char.IsDigit(text[0]))
                 {
-                    GameCom.InitClient(((TextBox)sender).Text);
-                    GameCom.GameClient.StringReceivedEvent += StringReceivedEvent;
+                    GameCom.InitClient(text);
+                    GameCom.GameClient.StringReceivedEvent += StringReceived;
 
                     inputBox.Text = "";
 
@@ -202,9 +216,9 @@ namespace OrdSpel2
 
                 else if (GameState.Phase == "[PHASE1]")
                 {
-                    bool canAddToBoard = BoardHandler.CanAddToBoard(((TextBox)sender).Text);
+                    bool canAddToBoard = BoardHandler.CanAddToBoard(text);
 
-                    if (canAddToBoard == false || WillBoardCoverageBeAbove(50, ((TextBox)sender).Text))
+                    if (canAddToBoard == false || WillBoardCoverageBeAbove(50, text))
                     {
                         GameState.Phase = "[PHASE2]";
                         SetAllButtons(false);
@@ -224,19 +238,19 @@ namespace OrdSpel2
                         return;
                     }
 
-                    BoardHandler.AddToBoard(((TextBox)sender).Text);
+                    BoardHandler.AddToBoard(text);
 
-                    AddToChatBox(((TextBox)sender).Text);
+                    AddToChatBox(text);
 
                     if (GameCom.GameServer != null)
                     {
-                        GameCom.GameServer.SendString(((TextBox)sender).Text);
+                        GameCom.GameServer.SendString(text);
                         GameCom.GameServer.SendString(GameState.ToString());
                     }
 
                     else if (GameCom.GameClient != null)
                     {
-                        GameCom.GameClient.SendString(((TextBox)sender).Text);
+                        GameCom.GameClient.SendString(text);
                         GameCom.GameClient.SendString(GameState.ToString());
                     }
 
@@ -247,7 +261,7 @@ namespace OrdSpel2
 
                 else if (GameState.Phase == "[PHASE2]")
                 {
-                    if (GameState.GetWord(_lastClickedX, _lastClickedY).TheWord == ((TextBox)sender).Text)
+                    if (GameState.GetWord(_lastClickedX, _lastClickedY).TheWord == text)
                     {
                         GameState.RevealWord(_lastClickedX, _lastClickedY);
                         RenderRevealed();
@@ -280,6 +294,74 @@ namespace OrdSpel2
             }
         }
 
+        private void handleQWERTYAudio(Key key)
+        {
+            if (key == Key.A)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("AlphaSample", ".//wav//NATO//ALPHA.wav").Path));
+            else if (key == Key.B)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("BravoSample", ".//wav//NATO//BRAVO.wav").Path));
+            else if (key == Key.C)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("CharlieSample", ".//wav//NATO//CHARLIE.wav").Path));
+            else if (key == Key.D)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("DeltaSample", ".//wav//NATO//DELTA.wav").Path));
+            else if (key == Key.E)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("EchoSample", ".//wav//NATO//ECHO.wav").Path));
+            else if (key == Key.F)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("FoxtrotSample", ".//wav//NATO//FOXTROT.wav").Path));
+            else if (key == Key.G)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("GolfSample", ".//wav//NATO//GOLF.wav").Path));
+            else if (key == Key.H)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("HotelSample", ".//wav//NATO//HOTEL.wav").Path));
+            else if (key == Key.I)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("IndiaSample", ".//wav//NATO//INDIA.wav").Path));
+            else if (key == Key.J)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("JulietSample", ".//wav//NATO//JULIET.wav").Path));
+            else if (key == Key.K)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("KiloSample", ".//wav//NATO//KILO.wav").Path));
+            else if (key == Key.L)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("LimaSample", ".//wav//NATO//LIMA.wav").Path));
+            else if (key == Key.M)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("MikeSample", ".//wav//NATO//MIKE.wav").Path));
+            else if (key == Key.N)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("NovemberSample", ".//wav//NATO//NOVEMBER.wav").Path));
+            else if (key == Key.O)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("OscarSample", ".//wav//NATO//OSCAR.wav").Path));
+            else if (key == Key.P)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("PapaSample", ".//wav//NATO//PAPA.wav").Path));
+            else if (key == Key.Q)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("QuebecSample", ".//wav//NATO//QUEBEC.wav").Path));
+            else if (key == Key.R)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("RomeoSample", ".//wav//NATO//ROMEO.wav").Path));
+            else if (key == Key.S)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("SierraSample", ".//wav//NATO//SIERRA.wav").Path));
+            else if (key == Key.T)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("TangoSample", ".//wav//NATO//TANGO.wav").Path));
+            else if (key == Key.U)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("UniformSample", ".//wav//NATO//UNIFORM.wav").Path));
+            else if (key == Key.V)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("VictorSample", ".//wav//NATO//VICTOR.wav").Path));
+            else if (key == Key.W)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("WhiskeySample", ".//wav//NATO//WHISKEY.wav").Path));
+            else if (key == Key.X)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("XraySample", ".//wav//NATO//XRAY.wav").Path));
+            else if (key == Key.Y)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("YankeeSample", ".//wav//NATO//YANKEE.wav").Path));
+            else if (key == Key.Z)
+                selectedSamples.Add(new AudioFileReader(new AudioSample("ZuluSample", ".//wav//NATO//ZULU.wav").Path));
+
+            fullAudio = new ConcatenatingSampleProvider(selectedSamples);
+
+            try
+            {
+                player.Init(fullAudio);
+                player.Play();
+            }
+            catch 
+            {
+                ;
+            }
+        }
+
         private bool WillBoardCoverageBeAbove(int n, string text)
         {
             int z = 0;
@@ -300,7 +382,7 @@ namespace OrdSpel2
                 return false;
         }
 
-        private void StringReceivedEvent(object? sender, string str)
+        private void StringReceived(object? sender, string str)
         {
             if (str.StartsWith("[BEGINGAMESTATE]"))
                 System.Windows.Application.Current.Dispatcher.Invoke(() => HandleReceiveGameState(str));
