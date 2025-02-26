@@ -157,6 +157,34 @@ namespace OrdSpel2
                 if (text == $"/NATO")
                     _natoWav = true;
 
+                if (text == $"/hitler")
+                {
+                    _selectedSamples.Add(new AudioFileReader(new AudioSample("Hitler01", ".//wav//hitler//Hitler_01.wav").Path));
+                    _selectedSamples.Add(new AudioFileReader(new AudioSample("Hitler02", ".//wav//hitler//Hitler_02.wav").Path));
+                    _selectedSamples.Add(new AudioFileReader(new AudioSample("Hitler03", ".//wav//hitler//Hitler_03.wav").Path));
+                    _selectedSamples.Add(new AudioFileReader(new AudioSample("Hitler04", ".//wav//hitler//Hitler_04.wav").Path));
+                    _selectedSamples.Add(new AudioFileReader(new AudioSample("Hitler_LongLive", ".//wav//hitler//Hitler_LongLive.wav").Path));
+
+                    Random rnd = new Random();
+                    int idx = rnd.Next(0, 5);
+
+                    var _oneSelectedSamples = new List<ISampleProvider>();
+                    var _selectedSample = _selectedSamples[idx];
+                    _oneSelectedSamples.Add(_selectedSample);
+
+                    _fullAudio = new ConcatenatingSampleProvider(_oneSelectedSamples);
+
+                    try
+                    {
+                        _wavPlayer.Init(_fullAudio);
+                        _wavPlayer.Play();
+                    }
+                    catch
+                    {
+                        ;
+                    }
+                }
+
                 if (text == "")
                 {
                     if (GameState.Phase == "[PHASE2]")

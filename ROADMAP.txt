@@ -6,7 +6,7 @@ Next one will be /tetris whereby the app becomes tetris and it plays the melody 
 Third one will be /ai whereby the app suggests synonyms all the time.
 Fourth one will be /wait(milliseconds) whereby the app displays the circle loading thingy for that amount of time for both players.
 Fifth one will be /censorship whereby the app allows both players to use the arrow keys to guide the censorship...
----UNDER DEVELOPMENT Sixth one will be /hitler whereby the app plays a random hitler audio sample.
+---DONE---UNDER DEVELOPMENT Sixth one will be /hitler whereby the app plays a random hitler audio sample.
 Seventh one will be /paradox whereby the app puts a random paradox in the grid.
 Eighth one will be /insanity whereby the app scrambles letters. And doesn't stop. And becomes unresponsive.
 Ninth one will be /discoball whereby the buttons clearly are influenced by a disco ball.
