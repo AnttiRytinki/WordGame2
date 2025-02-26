@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="wav\NATO\" />
+    <Folder Include="wav\hitler\" />
   </ItemGroup>
 
   <ItemGroup>
