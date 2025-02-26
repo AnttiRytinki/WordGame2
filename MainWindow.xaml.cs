@@ -193,7 +193,15 @@ namespace OrdSpel2
 
                 else if (Char.IsDigit(((TextBox)sender).Text[0]))
                 {
-                    GameCom.InitClient(((TextBox)sender).Text);
+                    try
+                    {
+                        GameCom.InitClient(((TextBox)sender).Text);
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                    
                     GameCom.GameClient.StringReceivedEvent += StringReceivedEvent;
 
                     inputBox.Text = "";
