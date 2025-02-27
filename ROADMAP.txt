@@ -30,6 +30,7 @@ Twentyfifth one will be /gameoflife whereby the app becomes John Conways game of
 Twentysixth one will be /hideandseek.
 Twentyseventh one will be /paranoia.
 Twentyeighth one will be /drums whereby the numpad becomes a drum machine.
+Twentyninth one will be /typewriter wherebuy the app sounds like a type writer.
 
 /quote(southpark)
 /quote(simpsons)
@@ -44,6 +45,8 @@ App rename suggestions instead of OrdSpel 2:
 Hypothesis
 Genious
 Association
+
+Will add ErrorBuzzer.wav
 
 -----------------------
 

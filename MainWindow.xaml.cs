@@ -1,5 +1,4 @@
-﻿using NAudio.Wave;
-using NAudio.Wave.SampleProviders;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -28,11 +27,23 @@ namespace OrdSpel2
         {
             InitializeComponent();
 
-            SetButtonProperties();
+            SetAllButtonProperties();
             SetAllButtons(false);
 
-            GameState= new GameState(Helpers);
+            if (File.Exists($"./memory.txt") == false)
+                File.Create($"./memory.txt");
+
+            if (File.Exists($"./settings.txt") == false)
+                InitSettingsTxt();
+
+            GameState = new GameState(Helpers);
             BoardHandler = new BoardHandler(Helpers, GameState);
+        }
+
+        private void InitSettingsTxt()
+        {
+            File.Create($"./settings.txt");
+            // TODO
         }
 
         private void SetAllButtons(bool enabled)
@@ -129,7 +140,7 @@ namespace OrdSpel2
             }
         }
 
-        private void SetButtonProperties()
+        private void SetAllButtonProperties()
         {
             for (int x = 0; x < 10; x++)
             {
@@ -182,7 +193,7 @@ namespace OrdSpel2
                         return;
                 }
 
-                else if (text.Contains(" "))
+                else if (text.Contains(" ") || (text.Length > 10))
                     return;
 
                 else if (text.Contains("startserver"))
@@ -195,9 +206,7 @@ namespace OrdSpel2
                         return;
 
                     inputBox.Text = "";
-
                     Thread.Sleep(1000);
-
                     GameCom.GameServer.SendString("-GAME START-");
 
                     return;
@@ -213,9 +222,7 @@ namespace OrdSpel2
                         return;
 
                     inputBox.Text = "";
-
                     Thread.Sleep(1000);
-
                     GameCom.GameClient.SendString("-GAME START-");
 
                     return;
@@ -224,6 +231,11 @@ namespace OrdSpel2
                 else if (GameState.Phase == "[PHASE1]")
                 {
                     bool canAddToBoard = BoardHandler.CanAddToBoard(text);
+
+                    using (StreamWriter sw = File.AppendText($"./memory.txt"))
+                    {
+                        sw.WriteLine(System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " --- " + text + "\n");
+                    }
 
                     if (canAddToBoard == false || WillBoardCoverageBeAbove(50, text))
                     {
@@ -284,14 +296,10 @@ namespace OrdSpel2
                     GameState.LetterWasRevealed = false;
 
                     if (GameCom.GameServer != null)
-                    {
                         GameCom.GameServer.SendString(GameState.ToString());
-                    }
 
                     else if (GameCom.GameClient != null)
-                    {
                         GameCom.GameClient.SendString(GameState.ToString());
-                    }
 
                     ShowGamePoints();
 
