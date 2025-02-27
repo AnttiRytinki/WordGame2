@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OrdSpel2
+namespace BrainStorm
 {
     public class GameEngine
     {

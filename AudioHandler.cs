@@ -2,7 +2,7 @@
 using NAudio.Wave;
 using System.Windows.Input;
 
-namespace OrdSpel2
+namespace BrainStorm
 {
     public class AudioHandler
     {

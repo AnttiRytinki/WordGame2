@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace OrdSpel2
+namespace BrainStorm
 {
     public class GameClient
     {

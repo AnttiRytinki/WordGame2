@@ -1,4 +1,4 @@
-﻿namespace OrdSpel2
+﻿namespace BrainStorm
 {
     public class GameState
     {

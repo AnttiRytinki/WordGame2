@@ -44,12 +44,6 @@ Will add hiscore-solo.txt for solo mode.
 
 Will make ALT-key hold down cycle through suggestions from memory.txt
 
-App rename suggestions instead of OrdSpel 2:
-Brainstorm
-Hypothesis
-Genious
-Association
-
 Will add ErrorBuzzer.wav
 
 -----------------------
