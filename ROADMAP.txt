@@ -29,6 +29,7 @@ Twentyfourth one will be /switch whereby the app switches green to be the opposi
 Twentyfifth one will be /gameoflife whereby the app becomes John Conways game of life.
 Twentysixth one will be /hideandseek.
 Twentyseventh one will be /paranoia.
+Twentyeighth one will be /drums whereby the numpad becomes a drum machine.
 
 /quote(southpark)
 /quote(simpsons)

@@ -18,5 +18,13 @@
             chars[index] = newChar;
             return new string(chars);
         }
+
+        public string StringBetween(string input, string str1, string str2)
+        {
+            int pFrom = input.IndexOf(str1) + str1.Length;
+            int pTo = input.LastIndexOf(str2);
+
+            return input.Substring(pFrom, pTo - pFrom);
+        }
     }
 }

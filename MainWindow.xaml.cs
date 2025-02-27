@@ -11,7 +11,7 @@ namespace OrdSpel2
     {
         public Helpers Helpers { get; set; } = new Helpers();
 
-        public GameState GameState { get; set; } = new GameState();
+        public GameState GameState { get; set; }
         public GameCom GameCom { get; set; } = new GameCom();
 
         public BoardHandler BoardHandler { get; set; }
@@ -33,6 +33,7 @@ namespace OrdSpel2
             SetButtonProperties();
             SetAllButtons(false);
 
+            GameState= new GameState(Helpers);
             BoardHandler = new BoardHandler(Helpers, GameState);
         }
 
@@ -418,7 +419,7 @@ namespace OrdSpel2
 
         private void HandleReceiveGameState(string str)
         {
-            GameState = new GameState();
+            GameState = new GameState(Helpers);
             GameState.FromString(str);
             //GameState.RevealAll();
             RenderRevealed();
