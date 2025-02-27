@@ -37,6 +37,13 @@ Twentyseventh one will be /paranoia.sex.
 
 Will add score equation for solo mode
 
+Will make ALT-key hold down cycle through suggestions from memory.txt
+
+App rename suggestions instead of OrdSpel 2:
+Hypothesis
+Genious
+Association
+
 -----------------------
 
 If you wish to assist then email me at antti.rytinki@outlook.com and type "WordGame2" in the subject field.
