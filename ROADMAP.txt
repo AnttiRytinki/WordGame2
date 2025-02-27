@@ -36,12 +36,16 @@ Twentyninth one will be /typewriter wherebuy the app sounds like a type writer.
 /quote(simpsons)
 /quote(familyguy)
 /quote(lotr)
+/quote(einstein)
 
-Will add score equation for solo mode
+Will make player select "Online" or "Solo" mode at start.
+Will add score equation for solo mode.
+Will add hiscore-solo.txt for solo mode.
 
 Will make ALT-key hold down cycle through suggestions from memory.txt
 
 App rename suggestions instead of OrdSpel 2:
+Brainstorm
 Hypothesis
 Genious
 Association
