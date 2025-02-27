@@ -9,18 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="received_files\**" />
     <Compile Remove="wav\**" />
+    <EmbeddedResource Remove="received_files\**" />
     <EmbeddedResource Remove="wav\**" />
+    <None Remove="received_files\**" />
     <None Remove="wav\**" />
+    <Page Remove="received_files\**" />
     <Page Remove="wav\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NAudio" Version="2.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="received_files\" />
   </ItemGroup>
 
 </Project>
