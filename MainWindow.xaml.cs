@@ -17,7 +17,7 @@ namespace BrainStorm
 
         bool _buttonsEnabled = false;
 
-        bool _natoWav = false;
+        bool _natoWavEnabled = false;
 
         public MainWindow()
         {
@@ -152,7 +152,7 @@ namespace BrainStorm
 
         private void inputBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (_natoWav)
+            if (_natoWavEnabled)
                 AudioHandler.HandleQWERTYAudio(e.Key);
 
             if (e.Key == Key.Enter)
@@ -161,7 +161,12 @@ namespace BrainStorm
                 string text = ((TextBox)sender).Text;
 
                 if (text == $"/NATO")
-                    _natoWav = true;
+                {
+                    if (_natoWavEnabled == false)
+                        _natoWavEnabled = true;
+                    else if (_natoWavEnabled == true)
+                        _natoWavEnabled = false;
+                }
 
                 if (text == $"/hitler")
                     AudioHandler.PlayRandomHitlerSample();
