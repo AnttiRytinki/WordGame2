@@ -1,5 +1,3 @@
-Extract wav.zip
-
 Launch app. To start, type "startserver" without the quotes and hit enter in the game.
 Open port 41748 in your router if you need to.
 
