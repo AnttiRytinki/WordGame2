@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace OrdSpel2
+namespace BrainStorm
 {
     /// <summary>
     /// Interaction logic for App.xaml

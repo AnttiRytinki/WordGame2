@@ -1,40 +1,44 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace OrdSpel2
+namespace BrainStorm
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public GameState GameState { get; set; } = new GameState();
         public GameCom GameCom { get; set; } = new GameCom();
+        public GameEngine GameEngine { get; set; } = new GameEngine();
+        public AudioHandler AudioHandler { get; set; } = new AudioHandler();
 
         int _lastClickedX = 0;
         int _lastClickedY = 0;
 
         bool _buttonsEnabled = false;
+        bool _natoWavEnabled = false;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            SetButtonProperties();
+            SetAllButtonProperties();
             SetAllButtons(false);
+
+            if (File.Exists($"./memory.txt") == false)
+                File.Create($"./memory.txt");
+
+            if (File.Exists($"./settings.txt") == false)
+                InitSettingsTxt();
+
+            GameEngine.GameState = new GameState(GameEngine.Helpers);
+            GameEngine.BoardHandler = new BoardHandler(GameEngine.Helpers, GameEngine.GameState);
+        }
+
+        private void InitSettingsTxt()
+        {
+            File.Create($"./settings.txt");
+            // TODO
         }
 
         private void SetAllButtons(bool enabled)
@@ -69,7 +73,7 @@ namespace OrdSpel2
 
             SetAllButtons(false);
             bool wordWasRevealed = false;
-            bool letterWasRevealed = GameState.Reveal(x, y, out wordWasRevealed);
+            bool letterWasRevealed = GameEngine.GameState.Reveal(x, y, out wordWasRevealed);
 
             if (letterWasRevealed)
             {
@@ -84,10 +88,10 @@ namespace OrdSpel2
                     inputBox.IsEnabled = false;
 
                     if (GameCom.GameServer != null)
-                        GameState.PointsPlayerA = GameState.PointsPlayerA + 1;
+                        GameEngine.GameState.PointsPlayerA = GameEngine.GameState.PointsPlayerA + 1;
 
                     else if (GameCom.GameClient != null)
-                        GameState.PointsPlayerB = GameState.PointsPlayerB + 1;
+                        GameEngine.GameState.PointsPlayerB = GameEngine.GameState.PointsPlayerB + 1;
 
                     ShowGamePoints();
                 }
@@ -96,10 +100,10 @@ namespace OrdSpel2
             RenderRevealed();
 
             if (GameCom.GameServer != null)
-                GameCom.GameServer.SendString(GameState.ToString());
+                GameCom.GameServer.SendString(GameEngine.GameState.ToString());
 
             else if (GameCom.GameClient != null)
-                GameCom.GameClient.SendString(GameState.ToString());
+                GameCom.GameClient.SendString(GameEngine.GameState.ToString());
         }
 
         private void RenderRevealed()
@@ -108,18 +112,18 @@ namespace OrdSpel2
             {
                 for (int y = 0; y < 10; y++)
                 {
-                    if (GameState.RevealedBoard[y][x] != ' ')
+                    if (GameEngine.GameState.RevealedBoard[y][x] != ' ')
                     {
                         var button = (Button)this.FindName("b" + x.ToString() + y.ToString());
 
-                        if (GameState.RevealedBoard[y][x] == '#')
+                        if (GameEngine.GameState.RevealedBoard[y][x] == '#')
                         {
                             button.Content = (char)9632;
                             continue;
                         }
 
-                        button.Content = GameState.RevealedBoard[y][x];
-                        var word = GameState.GetWord(x, y);
+                        button.Content = GameEngine.GameState.RevealedBoard[y][x];
+                        var word = GameEngine.GameState.GetWord(x, y);
 
                         if (word.Horizontal == false)
                             button.BorderBrush = Brushes.Red;
@@ -131,7 +135,7 @@ namespace OrdSpel2
             }
         }
 
-        private void SetButtonProperties()
+        private void SetAllButtonProperties()
         {
             for (int x = 0; x < 10; x++)
             {
@@ -147,15 +151,30 @@ namespace OrdSpel2
 
         private void inputBox_KeyDown(object sender, KeyEventArgs e)
         {
+            if (_natoWavEnabled)
+                AudioHandler.HandleQWERTYAudio(e.Key);
+
             if (e.Key == Key.Enter)
             {
                 inputBox.Background = Brushes.White;
+                string text = ((TextBox)sender).Text;
 
-                if (((TextBox)sender).Text == "")
+                if (text == $"/NATO")
                 {
-                    if(GameState.Phase == "[PHASE2]")
+                    if (_natoWavEnabled == false)
+                        _natoWavEnabled = true;
+                    else if (_natoWavEnabled == true)
+                        _natoWavEnabled = false;
+                }
+
+                if (text == $"/hitler")
+                    AudioHandler.PlayRandomHitlerSample();
+
+                if (text == "")
+                {
+                    if (GameEngine.GameState.Phase == "[PHASE2]")
                     {
-                        GameState.LetterWasRevealed = false;
+                        GameEngine.GameState.LetterWasRevealed = false;
                         SetAllButtons(false);
                         ShowGamePoints();
 
@@ -164,62 +183,63 @@ namespace OrdSpel2
                         inputBox.IsEnabled = false;
 
                         if (GameCom.GameServer != null)
-                            GameCom.GameServer.SendString(GameState.ToString());
+                            GameCom.GameServer.SendString(GameEngine.GameState.ToString());
 
                         else if (GameCom.GameClient != null)
-                            GameCom.GameClient.SendString(GameState.ToString());
+                            GameCom.GameClient.SendString(GameEngine.GameState.ToString());
                     }
 
                     else
                         return;
                 }
 
-                else if (((TextBox)sender).Text.Contains(" "))
+                else if (text.Contains(" ") || (text.Length > 10))
                     return;
 
-                else if (((TextBox)sender).Text.Contains("startserver"))
+                else if (text.Contains("startserver"))
                 {
                     GameCom.InitServer();
-                    GameCom.GameServer.StringReceivedEvent += StringReceivedEvent;
+
+                    if (GameCom.GameServer != null)
+                        GameCom.GameServer.StringReceivedEvent += StringReceived;
+                    else
+                        return;
 
                     inputBox.Text = "";
-
                     Thread.Sleep(1000);
-
                     GameCom.GameServer.SendString("-GAME START-");
 
                     return;
                 }
 
-                else if (Char.IsDigit(((TextBox)sender).Text[0]))
+                else if (Char.IsDigit(text[0]))
                 {
-                    try
-                    {
-                        GameCom.InitClient(((TextBox)sender).Text);
-                    }
-                    catch
-                    {
+                    GameCom.InitClient(text);
+
+                    if (GameCom.GameClient != null)
+                        GameCom.GameClient.StringReceivedEvent += StringReceived;
+                    else
                         return;
-                    }
-                    
-                    GameCom.GameClient.StringReceivedEvent += StringReceivedEvent;
 
                     inputBox.Text = "";
-
                     Thread.Sleep(1000);
-
                     GameCom.GameClient.SendString("-GAME START-");
 
                     return;
                 }
 
-                else if (GameState.Phase == "[PHASE1]")
+                else if (GameEngine.GameState.Phase == "[PHASE1]")
                 {
-                    bool canAddToBoard = CanAddToBoard(((TextBox)sender).Text);
+                    bool canAddToBoard = GameEngine.BoardHandler.CanAddToBoard(text);
 
-                    if (canAddToBoard == false || WillBoardCoverageBeAbove(50, ((TextBox)sender).Text))
+                    using (StreamWriter sw = File.AppendText($"./memory.txt"))
                     {
-                        GameState.Phase = "[PHASE2]";
+                        sw.WriteLine(System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " --- " + text + "\n");
+                    }
+
+                    if (canAddToBoard == false || WillBoardCoverageBeAbove(50, text))
+                    {
+                        GameEngine.GameState.Phase = "[PHASE2]";
                         SetAllButtons(false);
 
                         ShowGamePoints();
@@ -229,28 +249,29 @@ namespace OrdSpel2
                         inputBox.IsEnabled = false;
 
                         if (GameCom.GameServer != null)
-                            GameCom.GameServer.SendString(GameState.ToString());
+                            GameCom.GameServer.SendString(GameEngine.GameState.ToString());
 
                         else if (GameCom.GameClient != null)
-                            GameCom.GameClient.SendString(GameState.ToString());
+                            GameCom.GameClient.SendString(GameEngine.GameState.ToString());
 
                         return;
                     }
 
-                    AddToBoard(((TextBox)sender).Text);
+                    GameEngine.BoardHandler = new BoardHandler(GameEngine.Helpers, GameEngine.GameState);
+                    GameEngine.BoardHandler.AddToBoard(text);
 
-                    AddToChatBox(((TextBox)sender).Text);
+                    AddToChatBox(text);
 
                     if (GameCom.GameServer != null)
                     {
-                        GameCom.GameServer.SendString(((TextBox)sender).Text);
-                        GameCom.GameServer.SendString(GameState.ToString());
+                        GameCom.GameServer.SendString(text);
+                        GameCom.GameServer.SendString(GameEngine.GameState.ToString());
                     }
 
                     else if (GameCom.GameClient != null)
                     {
-                        GameCom.GameClient.SendString(((TextBox)sender).Text);
-                        GameCom.GameClient.SendString(GameState.ToString());
+                        GameCom.GameClient.SendString(text);
+                        GameCom.GameClient.SendString(GameEngine.GameState.ToString());
                     }
 
                     inputBox.Background = Brushes.Red;
@@ -258,31 +279,27 @@ namespace OrdSpel2
                     inputBox.IsEnabled = false;
                 }
 
-                else if (GameState.Phase == "[PHASE2]")
+                else if (GameEngine.GameState.Phase == "[PHASE2]")
                 {
-                    if (GameState.GetWord(_lastClickedX, _lastClickedY).TheWord == ((TextBox)sender).Text)
+                    if (GameEngine.GameState.GetWord(_lastClickedX, _lastClickedY).TheWord == text)
                     {
-                        GameState.RevealWord(_lastClickedX, _lastClickedY);
+                        GameEngine.GameState.RevealWord(_lastClickedX, _lastClickedY);
                         RenderRevealed();
 
                         if (GameCom.GameServer != null)
-                            GameState.PointsPlayerA = GameState.PointsPlayerA + 1;
+                            GameEngine.GameState.PointsPlayerA = GameEngine.GameState.PointsPlayerA + 1;
 
                         else if (GameCom.GameClient != null)
-                            GameState.PointsPlayerB = GameState.PointsPlayerB + 1;
+                            GameEngine.GameState.PointsPlayerB = GameEngine.GameState.PointsPlayerB + 1;
                     }
 
-                    GameState.LetterWasRevealed = false;
+                    GameEngine.GameState.LetterWasRevealed = false;
 
                     if (GameCom.GameServer != null)
-                    {
-                        GameCom.GameServer.SendString(GameState.ToString());
-                    }
+                        GameCom.GameServer.SendString(GameEngine.GameState.ToString());
 
                     else if (GameCom.GameClient != null)
-                    {
-                        GameCom.GameClient.SendString(GameState.ToString());
-                    }
+                        GameCom.GameClient.SendString(GameEngine.GameState.ToString());
 
                     ShowGamePoints();
 
@@ -301,7 +318,7 @@ namespace OrdSpel2
             {
                 for (int y = 0; y < 10; y++)
                 {
-                    if (GameState.Board[y][x] != ' ')
+                    if (GameEngine.GameState.Board[y][x] != ' ')
                         ++z;
                 }
             }
@@ -313,7 +330,7 @@ namespace OrdSpel2
                 return false;
         }
 
-        private void StringReceivedEvent(object? sender, string str)
+        private void StringReceived(object? sender, string str)
         {
             if (str.StartsWith("[BEGINGAMESTATE]"))
                 System.Windows.Application.Current.Dispatcher.Invoke(() => HandleReceiveGameState(str));
@@ -323,28 +340,28 @@ namespace OrdSpel2
 
         private void HandleReceiveGameState(string str)
         {
-            GameState = new GameState();
-            GameState.FromString(str);
+            GameEngine.GameState = new GameState(GameEngine.Helpers);
+            GameEngine.GameState.FromString(str);
             //GameState.RevealAll();
             RenderRevealed();
 
-            if (GameState.Phase == "[PHASE2]")
+            if (GameEngine.GameState.Phase == "[PHASE2]")
             {
                 ShowGamePoints();
 
-                if (GameState.LetterWasRevealed == false)
+                if (GameEngine.GameState.LetterWasRevealed == false)
                     SetAllButtons(true);
             }
 
-            if (GameState.LetterWasRevealed == false || GameState.WordWasRevealed == true)
+            if (GameEngine.GameState.LetterWasRevealed == false || GameEngine.GameState.WordWasRevealed == true)
             {
                 inputBox.Background = Brushes.White;
                 inputBox.Text = "";
                 inputBox.IsEnabled = true;
             }
 
-            GameState.LetterWasRevealed = false;
-            GameState.WordWasRevealed = false;
+            GameEngine.GameState.LetterWasRevealed = false;
+            GameEngine.GameState.WordWasRevealed = false;
         }
 
         private void ShowGamePoints()
@@ -353,14 +370,14 @@ namespace OrdSpel2
 
             if (GameCom.GameServer != null)
             {
-                AddToChatBox("Jag: " + GameState.PointsPlayerA.ToString());
-                AddToChatBox("Motst: " + GameState.PointsPlayerB.ToString());
+                AddToChatBox("Me: " + GameEngine.GameState.PointsPlayerA.ToString());
+                AddToChatBox("Opp: " + GameEngine.GameState.PointsPlayerB.ToString());
             }
 
             else if (GameCom.GameClient != null)
             {
-                AddToChatBox("Jag: " + GameState.PointsPlayerB.ToString());
-                AddToChatBox("Motst: " + GameState.PointsPlayerA.ToString());
+                AddToChatBox("Me: " + GameEngine.GameState.PointsPlayerB.ToString());
+                AddToChatBox("Opp: " + GameEngine.GameState.PointsPlayerA.ToString());
             }
         }
 
@@ -375,152 +392,6 @@ namespace OrdSpel2
             }
 
             chatBox.Text += text + "\n";
-        }
-
-        private bool CanAddToBoard(string text)
-        {
-            bool canAdd;
-
-            for (int i = 0; i < 100; i++)
-            {
-                Random rnd = new Random();
-                int x = rnd.Next(0, 9);
-                int y = rnd.Next(0, 9);
-                bool right = RandBool();
-
-                try
-                {
-                    canAdd = TryAddToBoard(x, y, right, text, true);
-                }
-                catch
-                {
-                    continue;
-                }
-
-                if (canAdd)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool AddToBoard(string text)
-        {
-            bool success;
-
-            for (int i = 0; i < 100; i++)
-            {
-                Random rnd = new Random();
-                int x = rnd.Next(0, 9);
-                int y = rnd.Next(0, 9);
-                bool right = RandBool();
-
-                try
-                {
-                    success = TryAddToBoard(x, y, right, text, false);
-                }
-                catch
-                {
-                    continue;
-                }
-
-                if (success)
-                {
-                    GameState.WordList.Add(new Word(x, y, text, right));
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool TryAddToBoard(int x, int y, bool right, string text, bool test)
-        {
-            if (right)
-            {
-                if (BoardSpaceRightIsEmpty(x, y, text.Length))
-                {
-                    if (!test)
-                        PutStringInBoardRight(x, y, text);
-
-                    return true;
-                }
-
-                else
-                    return false;
-            }
-
-            else
-            {
-                if (BoardSpaceDownIsEmpty(x, y, text.Length))
-                {
-                    if (!test)
-                        PutStringInBoardDown(x, y, text);
-
-                    return true;
-                }
-
-                else
-                    return false;
-            }
-        }
-
-        private void PutStringInBoardRight(int x, int y, string text)
-        {
-            for (int X = x; X < (text.Length + x); X++)
-            {
-                GameState.Board[y] = ReplaceAt(GameState.Board[y], X, text[X - x]);
-            }
-        }
-
-        private bool BoardSpaceRightIsEmpty(int x, int y, int length)
-        {
-            for (int X = x; X < (length + x); X++)
-            {
-                if (GameState.Board[y][X] != (char)32)
-                    return false;
-            }
-
-            return true;
-        }
-
-        private void PutStringInBoardDown(int x, int y, string text)
-        {
-            for (int Y = y; Y < (text.Length + y); Y++)
-            {
-                GameState.Board[Y] = ReplaceAt(GameState.Board[Y], x, text[Y - y]);
-            }
-        }
-
-        private bool BoardSpaceDownIsEmpty(int x, int y, int length)
-        {
-            for (int Y = y; Y < (length + y); Y++)
-            {
-                if (GameState.Board[Y][x] != (char)32)
-                    return false;
-            }
-
-            return true;
-        }
-
-        private bool RandBool()
-        {
-            var random = new Random();
-            return random.Next(2) == 1;
-        }
-
-        public string ReplaceAt(string input, int index, char newChar)
-        {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
-            char[] chars = input.ToCharArray();
-            chars[index] = newChar;
-            return new string(chars);
         }
     }
 }

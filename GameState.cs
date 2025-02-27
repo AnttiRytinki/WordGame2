@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OrdSpel2
+﻿namespace BrainStorm
 {
     public class GameState
     {
@@ -20,8 +13,11 @@ namespace OrdSpel2
         public bool LetterWasRevealed { get; set; } = false;
         public bool WordWasRevealed { get; set; } = false;
 
-        public GameState()
+        public Helpers Helpers { get; set; } = new Helpers();
+
+        public GameState(Helpers helpers)
         {
+            Helpers = helpers;
             Init();
         }
 
@@ -86,34 +82,34 @@ namespace OrdSpel2
 
         public void FromString(string state)
         {
-            Phase = StringBetween(state, "[BEGINGAMESTATE]", "[POINTS]");
+            Phase = Helpers.StringBetween(state, "[BEGINGAMESTATE]", "[POINTS]");
 
-            var pointsStrings = StringBetween(state, "[POINTS]", "[LETTERWASREVEALED]").Split(";");
+            var pointsStrings = Helpers.StringBetween(state, "[POINTS]", "[LETTERWASREVEALED]").Split(";");
 
             PointsPlayerA = int.Parse(pointsStrings[0]);
             PointsPlayerB = int.Parse(pointsStrings[1]);
 
-            var letterWasRevealedString = StringBetween(state, "[LETTERWASREVEALED]", "[WORDWASREVEALED]");
+            var letterWasRevealedString = Helpers.StringBetween(state, "[LETTERWASREVEALED]", "[WORDWASREVEALED]");
 
             LetterWasRevealed = bool.Parse(letterWasRevealedString);
 
-            var wordWasRevealedString = StringBetween(state, "[WORDWASREVEALED]", "[BOARD]");
+            var wordWasRevealedString = Helpers.StringBetween(state, "[WORDWASREVEALED]", "[BOARD]");
 
             WordWasRevealed = bool.Parse(wordWasRevealedString);
 
-            string boardString = StringBetween(state, "[BOARD]", "[REVEALEDBOARD]");
+            string boardString = Helpers.StringBetween(state, "[BOARD]", "[REVEALEDBOARD]");
             var boardStrings = boardString.Split(";");
 
             for (int i = 0; i < 10; i++)
                 Board[i] = boardStrings[i];
 
-            string revealedBoardString = StringBetween(state, "[REVEALEDBOARD]", "[WORDLIST]");
+            string revealedBoardString = Helpers.StringBetween(state, "[REVEALEDBOARD]", "[WORDLIST]");
             var revealedBoardStrings = revealedBoardString.Split(";");
 
             for (int i = 0; i < 10; i++)
                 RevealedBoard[i] = revealedBoardStrings[i];
 
-            string wordPropsString = StringBetween(state, "[WORDLIST]", "[ENDGAMESTATE]");
+            string wordPropsString = Helpers.StringBetween(state, "[WORDLIST]", "[ENDGAMESTATE]");
             var wordPropsStrings = wordPropsString.Split(";");
 
             string[] newWordPropsStrings = new string[wordPropsStrings.Length - 1];
@@ -149,7 +145,7 @@ namespace OrdSpel2
         {
             if (Board[y][x] == ' ')
             {
-                RevealedBoard[y] = ReplaceAt(RevealedBoard[y], x, '#');
+                RevealedBoard[y] = Helpers.ReplaceAt(RevealedBoard[y], x, '#');
                 wordWasRevealed = false;
                 WordWasRevealed = false;
 
@@ -159,7 +155,7 @@ namespace OrdSpel2
             else
             {
                 LetterWasRevealed = true;
-                RevealedBoard[y] = ReplaceAt(RevealedBoard[y], x, Board[y][x]);
+                RevealedBoard[y] = Helpers.ReplaceAt(RevealedBoard[y], x, Board[y][x]);
 
                 wordWasRevealed = true;
                 WordWasRevealed = true;
@@ -224,16 +220,19 @@ namespace OrdSpel2
                 }
             }
 
-            if (foundWord.Horizontal == true)
+            if (foundWord != null)
             {
-                for (int xx = foundWord.X; xx < foundWord.X + foundWord.TheWord.Length; xx++)
-                    Reveal(xx, y, out bool b);
-            }
+                if (foundWord.Horizontal == true)
+                {
+                    for (int xx = foundWord.X; xx < foundWord.X + foundWord.TheWord.Length; xx++)
+                        Reveal(xx, y, out bool b);
+                }
 
-            else
-            {
-                for (int yy = foundWord.Y; yy < foundWord.Y + foundWord.TheWord.Length; yy++)
-                    Reveal(x, yy, out bool b);
+                else
+                {
+                    for (int yy = foundWord.Y; yy < foundWord.Y + foundWord.TheWord.Length; yy++)
+                        Reveal(x, yy, out bool b);
+                }
             }
         }
 
@@ -261,25 +260,6 @@ namespace OrdSpel2
             }
 
             return new Word(99, 99, "99", false);
-        }
-
-        public string StringBetween(string input, string str1, string str2)
-        {
-            int pFrom = input.IndexOf(str1) + str1.Length;
-            int pTo = input.LastIndexOf(str2);
-
-            return input.Substring(pFrom, pTo - pFrom);
-        }
-
-        public string ReplaceAt(string input, int index, char newChar)
-        {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
-            char[] chars = input.ToCharArray();
-            chars[index] = newChar;
-            return new string(chars);
         }
     }
 }

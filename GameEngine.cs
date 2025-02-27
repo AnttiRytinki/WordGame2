@@ -18,7 +18,7 @@ namespace BrainStorm
 
         public GameEngine() 
         {
-            GameState = new GameState();
+            GameState = new GameState(Helpers);
             BoardHandler = new BoardHandler(Helpers, GameState);
         }
     }
