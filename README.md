@@ -4,7 +4,7 @@ Open port 41748 in your router if you need to.
 For local play launch two instances of the app then type startserver in the first
 and then 127.0.0.1 in the second one.
 
-Phase 1 of game starts, type words back and forth.
+Phase 1 of game starts, type words back and forth. In any language.
 Then phase 2 will start where you click the buttons to find the words that you've hidden in phase 1.
 
 Other computer types IP adress of server computer and the game will say "GAME START".
