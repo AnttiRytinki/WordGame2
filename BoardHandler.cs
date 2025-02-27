@@ -1,6 +1,4 @@
-﻿using OrdSpel2;
-
-namespace BrainStorm
+﻿namespace BrainStorm
 {
     public class BoardHandler
     {
