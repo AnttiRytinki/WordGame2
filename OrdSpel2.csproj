@@ -9,7 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wav\NATO\" />
+    <Compile Remove="wav\**" />
+    <EmbeddedResource Remove="wav\**" />
+    <None Remove="wav\**" />
+    <Page Remove="wav\**" />
   </ItemGroup>
 
   <ItemGroup>
