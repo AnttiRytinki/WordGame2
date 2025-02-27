@@ -12,3 +12,6 @@
 /.vs/BrainStorm/v17/.suo
 /.vs/BrainStorm/v17/DocumentLayout.backup.json
 /.vs/BrainStorm/v17/DocumentLayout.json
+/bin/Release/net8.0-windows/BrainStorm.dll
+/bin/Release/net8.0-windows/BrainStorm.exe
+/bin/Release/net8.0-windows/BrainStorm.pdb
