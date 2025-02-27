@@ -152,7 +152,16 @@ namespace BrainStorm
         private void inputBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (_natoWavEnabled)
-                AudioHandler.HandleQWERTYAudio(e.Key);
+            {
+                try
+                {
+                    AudioHandler.HandleQWERTYAudio(e.Key);
+                }
+                catch
+                {
+                    ;
+                }
+            }
 
             if (e.Key == Key.Enter)
             {
@@ -168,7 +177,16 @@ namespace BrainStorm
                 }
 
                 if (text == $"/hitler")
-                    AudioHandler.PlayRandomHitlerSample();
+                {
+                    try
+                    {
+                        AudioHandler.PlayRandomHitlerSample();
+                    }
+                    catch 
+                    {
+                        ;
+                    }
+                }
 
                 if (text == "")
                 {
@@ -193,7 +211,7 @@ namespace BrainStorm
                         return;
                 }
 
-                else if (text.Contains(" ") || (text.Length > 10))
+                else if (text.Contains(" ") || ((text.Length > 10) && !text.Contains("startserver")))
                     return;
 
                 else if (text.Contains("startserver"))
