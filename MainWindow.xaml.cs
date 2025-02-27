@@ -215,7 +215,11 @@ namespace OrdSpel2
                 else if (text.Contains("startserver"))
                 {
                     GameCom.InitServer();
-                    GameCom.GameServer.StringReceivedEvent += StringReceived;
+
+                    if (GameCom.GameServer != null)
+                        GameCom.GameServer.StringReceivedEvent += StringReceived;
+                    else
+                        return;
 
                     inputBox.Text = "";
 
@@ -229,7 +233,11 @@ namespace OrdSpel2
                 else if (Char.IsDigit(text[0]))
                 {
                     GameCom.InitClient(text);
-                    GameCom.GameClient.StringReceivedEvent += StringReceived;
+
+                    if (GameCom.GameClient != null)
+                        GameCom.GameClient.StringReceivedEvent += StringReceived;
+                    else
+                        return;
 
                     inputBox.Text = "";
 

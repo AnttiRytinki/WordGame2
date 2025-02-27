@@ -220,16 +220,19 @@
                 }
             }
 
-            if (foundWord.Horizontal == true)
+            if (foundWord != null)
             {
-                for (int xx = foundWord.X; xx < foundWord.X + foundWord.TheWord.Length; xx++)
-                    Reveal(xx, y, out bool b);
-            }
+                if (foundWord.Horizontal == true)
+                {
+                    for (int xx = foundWord.X; xx < foundWord.X + foundWord.TheWord.Length; xx++)
+                        Reveal(xx, y, out bool b);
+                }
 
-            else
-            {
-                for (int yy = foundWord.Y; yy < foundWord.Y + foundWord.TheWord.Length; yy++)
-                    Reveal(x, yy, out bool b);
+                else
+                {
+                    for (int yy = foundWord.Y; yy < foundWord.Y + foundWord.TheWord.Length; yy++)
+                        Reveal(x, yy, out bool b);
+                }
             }
         }
 
