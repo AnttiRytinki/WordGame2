@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OrdSpel2"
         mc:Ignorable="d"
-        Title="OrdSpel 2" Height="500" Width="330"
+        Title="BrainStorm" Height="500" Width="330"
         ResizeMode="NoResize">
     <Grid>
         <StackPanel>
