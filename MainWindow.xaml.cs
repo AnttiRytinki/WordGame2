@@ -8,12 +8,12 @@ namespace OrdSpel2
 {
     public partial class MainWindow : Window
     {
-        public Helpers Helpers { get; set; } = new Helpers();
-
-        public GameState GameState { get; set; }
         public GameCom GameCom { get; set; } = new GameCom();
 
+        public Helpers Helpers { get; set; } = new Helpers();
+        public GameState GameState { get; set; }
         public BoardHandler BoardHandler { get; set; }
+
         public AudioHandler AudioHandler { get; set; } = new AudioHandler();
 
         int _lastClickedX = 0;
