@@ -65,12 +65,19 @@ namespace OrdSpel2
             else if (key == Key.Z)
                 _selectedSamples.Add(new AudioFileReader(new AudioSample("ZuluSample", ".//wav//NATO//ZULU.wav").Path));
 
-            _fullAudio = new ConcatenatingSampleProvider(_selectedSamples);
-
             try
             {
-                _wavPlayer.Init(_fullAudio);
-                _wavPlayer.Play();
+                _fullAudio = new ConcatenatingSampleProvider(_selectedSamples);
+
+                try
+                {
+                    _wavPlayer.Init(_fullAudio);
+                    _wavPlayer.Play();
+                }
+                catch
+                {
+                    ;
+                }
             }
             catch
             {
