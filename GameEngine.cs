@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrdSpel2;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace BrainStorm
 
         public GameEngine() 
         {
-            GameState = new GameState(Helpers);
+            GameState = new GameState();
             BoardHandler = new BoardHandler(Helpers, GameState);
         }
     }
