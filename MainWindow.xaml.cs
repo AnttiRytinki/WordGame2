@@ -9,11 +9,7 @@ namespace OrdSpel2
     public partial class MainWindow : Window
     {
         public GameCom GameCom { get; set; } = new GameCom();
-
-        public Helpers Helpers { get; set; } = new Helpers();
-        public GameState GameState { get; set; }
-        public BoardHandler BoardHandler { get; set; }
-
+        public GameEngine GameEngine { get; set; } = new GameEngine();
         public AudioHandler AudioHandler { get; set; } = new AudioHandler();
 
         int _lastClickedX = 0;
@@ -36,8 +32,8 @@ namespace OrdSpel2
             if (File.Exists($"./settings.txt") == false)
                 InitSettingsTxt();
 
-            GameState = new GameState(Helpers);
-            BoardHandler = new BoardHandler(Helpers, GameState);
+            GameEngine.GameState = new GameState(GameEngine.Helpers);
+            GameEngine.BoardHandler = new BoardHandler(GameEngine.Helpers, GameEngine.GameState);
         }
 
         private void InitSettingsTxt()
@@ -78,7 +74,7 @@ namespace OrdSpel2
 
             SetAllButtons(false);
             bool wordWasRevealed = false;
-            bool letterWasRevealed = GameState.Reveal(x, y, out wordWasRevealed);
+            bool letterWasRevealed = GameEngine.GameState.Reveal(x, y, out wordWasRevealed);
 
             if (letterWasRevealed)
             {
@@ -93,10 +89,10 @@ namespace OrdSpel2
                     inputBox.IsEnabled = false;
 
                     if (GameCom.GameServer != null)
-                        GameState.PointsPlayerA = GameState.PointsPlayerA + 1;
+                        GameEngine.GameState.PointsPlayerA = GameEngine.GameState.PointsPlayerA + 1;
 
                     else if (GameCom.GameClient != null)
-                        GameState.PointsPlayerB = GameState.PointsPlayerB + 1;
+                        GameEngine.GameState.PointsPlayerB = GameEngine.GameState.PointsPlayerB + 1;
 
                     ShowGamePoints();
                 }
@@ -105,10 +101,10 @@ namespace OrdSpel2
             RenderRevealed();
 
             if (GameCom.GameServer != null)
-                GameCom.GameServer.SendString(GameState.ToString());
+                GameCom.GameServer.SendString(GameEngine.GameState.ToString());
 
             else if (GameCom.GameClient != null)
-                GameCom.GameClient.SendString(GameState.ToString());
+                GameCom.GameClient.SendString(GameEngine.GameState.ToString());
         }
 
         private void RenderRevealed()
@@ -117,18 +113,18 @@ namespace OrdSpel2
             {
                 for (int y = 0; y < 10; y++)
                 {
-                    if (GameState.RevealedBoard[y][x] != ' ')
+                    if (GameEngine.GameState.RevealedBoard[y][x] != ' ')
                     {
                         var button = (Button)this.FindName("b" + x.ToString() + y.ToString());
 
-                        if (GameState.RevealedBoard[y][x] == '#')
+                        if (GameEngine.GameState.RevealedBoard[y][x] == '#')
                         {
                             button.Content = (char)9632;
                             continue;
                         }
 
-                        button.Content = GameState.RevealedBoard[y][x];
-                        var word = GameState.GetWord(x, y);
+                        button.Content = GameEngine.GameState.RevealedBoard[y][x];
+                        var word = GameEngine.GameState.GetWord(x, y);
 
                         if (word.Horizontal == false)
                             button.BorderBrush = Brushes.Red;
@@ -172,9 +168,9 @@ namespace OrdSpel2
 
                 if (text == "")
                 {
-                    if (GameState.Phase == "[PHASE2]")
+                    if (GameEngine.GameState.Phase == "[PHASE2]")
                     {
-                        GameState.LetterWasRevealed = false;
+                        GameEngine.GameState.LetterWasRevealed = false;
                         SetAllButtons(false);
                         ShowGamePoints();
 
@@ -183,10 +179,10 @@ namespace OrdSpel2
                         inputBox.IsEnabled = false;
 
                         if (GameCom.GameServer != null)
-                            GameCom.GameServer.SendString(GameState.ToString());
+                            GameCom.GameServer.SendString(GameEngine.GameState.ToString());
 
                         else if (GameCom.GameClient != null)
-                            GameCom.GameClient.SendString(GameState.ToString());
+                            GameCom.GameClient.SendString(GameEngine.GameState.ToString());
                     }
 
                     else
@@ -228,9 +224,9 @@ namespace OrdSpel2
                     return;
                 }
 
-                else if (GameState.Phase == "[PHASE1]")
+                else if (GameEngine.GameState.Phase == "[PHASE1]")
                 {
-                    bool canAddToBoard = BoardHandler.CanAddToBoard(text);
+                    bool canAddToBoard = GameEngine.BoardHandler.CanAddToBoard(text);
 
                     using (StreamWriter sw = File.AppendText($"./memory.txt"))
                     {
@@ -239,7 +235,7 @@ namespace OrdSpel2
 
                     if (canAddToBoard == false || WillBoardCoverageBeAbove(50, text))
                     {
-                        GameState.Phase = "[PHASE2]";
+                        GameEngine.GameState.Phase = "[PHASE2]";
                         SetAllButtons(false);
 
                         ShowGamePoints();
@@ -249,29 +245,29 @@ namespace OrdSpel2
                         inputBox.IsEnabled = false;
 
                         if (GameCom.GameServer != null)
-                            GameCom.GameServer.SendString(GameState.ToString());
+                            GameCom.GameServer.SendString(GameEngine.GameState.ToString());
 
                         else if (GameCom.GameClient != null)
-                            GameCom.GameClient.SendString(GameState.ToString());
+                            GameCom.GameClient.SendString(GameEngine.GameState.ToString());
 
                         return;
                     }
 
-                    BoardHandler = new BoardHandler(Helpers, GameState);
-                    BoardHandler.AddToBoard(text);
+                    GameEngine.BoardHandler = new BoardHandler(GameEngine.Helpers, GameEngine.GameState);
+                    GameEngine.BoardHandler.AddToBoard(text);
 
                     AddToChatBox(text);
 
                     if (GameCom.GameServer != null)
                     {
                         GameCom.GameServer.SendString(text);
-                        GameCom.GameServer.SendString(GameState.ToString());
+                        GameCom.GameServer.SendString(GameEngine.GameState.ToString());
                     }
 
                     else if (GameCom.GameClient != null)
                     {
                         GameCom.GameClient.SendString(text);
-                        GameCom.GameClient.SendString(GameState.ToString());
+                        GameCom.GameClient.SendString(GameEngine.GameState.ToString());
                     }
 
                     inputBox.Background = Brushes.Red;
@@ -279,27 +275,27 @@ namespace OrdSpel2
                     inputBox.IsEnabled = false;
                 }
 
-                else if (GameState.Phase == "[PHASE2]")
+                else if (GameEngine.GameState.Phase == "[PHASE2]")
                 {
-                    if (GameState.GetWord(_lastClickedX, _lastClickedY).TheWord == text)
+                    if (GameEngine.GameState.GetWord(_lastClickedX, _lastClickedY).TheWord == text)
                     {
-                        GameState.RevealWord(_lastClickedX, _lastClickedY);
+                        GameEngine.GameState.RevealWord(_lastClickedX, _lastClickedY);
                         RenderRevealed();
 
                         if (GameCom.GameServer != null)
-                            GameState.PointsPlayerA = GameState.PointsPlayerA + 1;
+                            GameEngine.GameState.PointsPlayerA = GameEngine.GameState.PointsPlayerA + 1;
 
                         else if (GameCom.GameClient != null)
-                            GameState.PointsPlayerB = GameState.PointsPlayerB + 1;
+                            GameEngine.GameState.PointsPlayerB = GameEngine.GameState.PointsPlayerB + 1;
                     }
 
-                    GameState.LetterWasRevealed = false;
+                    GameEngine.GameState.LetterWasRevealed = false;
 
                     if (GameCom.GameServer != null)
-                        GameCom.GameServer.SendString(GameState.ToString());
+                        GameCom.GameServer.SendString(GameEngine.GameState.ToString());
 
                     else if (GameCom.GameClient != null)
-                        GameCom.GameClient.SendString(GameState.ToString());
+                        GameCom.GameClient.SendString(GameEngine.GameState.ToString());
 
                     ShowGamePoints();
 
@@ -318,7 +314,7 @@ namespace OrdSpel2
             {
                 for (int y = 0; y < 10; y++)
                 {
-                    if (GameState.Board[y][x] != ' ')
+                    if (GameEngine.GameState.Board[y][x] != ' ')
                         ++z;
                 }
             }
@@ -340,28 +336,28 @@ namespace OrdSpel2
 
         private void HandleReceiveGameState(string str)
         {
-            GameState = new GameState(Helpers);
-            GameState.FromString(str);
+            GameEngine.GameState = new GameState(GameEngine.Helpers);
+            GameEngine.GameState.FromString(str);
             //GameState.RevealAll();
             RenderRevealed();
 
-            if (GameState.Phase == "[PHASE2]")
+            if (GameEngine.GameState.Phase == "[PHASE2]")
             {
                 ShowGamePoints();
 
-                if (GameState.LetterWasRevealed == false)
+                if (GameEngine.GameState.LetterWasRevealed == false)
                     SetAllButtons(true);
             }
 
-            if (GameState.LetterWasRevealed == false || GameState.WordWasRevealed == true)
+            if (GameEngine.GameState.LetterWasRevealed == false || GameEngine.GameState.WordWasRevealed == true)
             {
                 inputBox.Background = Brushes.White;
                 inputBox.Text = "";
                 inputBox.IsEnabled = true;
             }
 
-            GameState.LetterWasRevealed = false;
-            GameState.WordWasRevealed = false;
+            GameEngine.GameState.LetterWasRevealed = false;
+            GameEngine.GameState.WordWasRevealed = false;
         }
 
         private void ShowGamePoints()
@@ -370,14 +366,14 @@ namespace OrdSpel2
 
             if (GameCom.GameServer != null)
             {
-                AddToChatBox("Me: " + GameState.PointsPlayerA.ToString());
-                AddToChatBox("Opp: " + GameState.PointsPlayerB.ToString());
+                AddToChatBox("Me: " + GameEngine.GameState.PointsPlayerA.ToString());
+                AddToChatBox("Opp: " + GameEngine.GameState.PointsPlayerB.ToString());
             }
 
             else if (GameCom.GameClient != null)
             {
-                AddToChatBox("Me: " + GameState.PointsPlayerB.ToString());
-                AddToChatBox("Opp: " + GameState.PointsPlayerA.ToString());
+                AddToChatBox("Me: " + GameEngine.GameState.PointsPlayerB.ToString());
+                AddToChatBox("Opp: " + GameEngine.GameState.PointsPlayerA.ToString());
             }
         }
 

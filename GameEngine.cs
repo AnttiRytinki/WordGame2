@@ -11,7 +11,7 @@ namespace OrdSpel2
         // Else in Online Mode
         public bool SoloMode { get; set; } = false;
 
-        Helpers Helpers { get; set; } = new Helpers();
+        public Helpers Helpers { get; set; } = new Helpers();
         public GameState GameState { get; set; }
         public BoardHandler BoardHandler { get; set; }
 
