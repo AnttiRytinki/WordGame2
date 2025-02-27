@@ -16,7 +16,6 @@ namespace BrainStorm
         int _lastClickedY = 0;
 
         bool _buttonsEnabled = false;
-
         bool _natoWavEnabled = false;
 
         public MainWindow()
