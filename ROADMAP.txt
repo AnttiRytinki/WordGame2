@@ -35,6 +35,7 @@ Twentysixth one will be /hideandseek.
 /quote(lotr)
 
 Will add score equation for solo mode
+Will make it possible to control with arrow keys as well as Home, End, PgUp, PgDn
 
 -----------------------
 
