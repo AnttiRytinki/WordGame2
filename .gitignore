@@ -16,3 +16,13 @@
 /bin/Release/net8.0-windows/BrainStorm.exe
 /bin/Release/net8.0-windows/BrainStorm.pdb
 /bin/Release/net8.0-windows/memory.txt
+/bin/Release/net8.0-windows/BrainStorm.deps.json
+/bin/Release/net8.0-windows/BrainStorm.runtimeconfig.json
+/bin/Release/net8.0-windows/NAudio.Asio.dll
+/bin/Release/net8.0-windows/NAudio.Core.dll
+/bin/Release/net8.0-windows/NAudio.dll
+/bin/Release/net8.0-windows/NAudio.Midi.dll
+/bin/Release/net8.0-windows/NAudio.Wasapi.dll
+/bin/Release/net8.0-windows/NAudio.WinForms.dll
+/bin/Release/net8.0-windows/NAudio.WinMM.dll
+/bin/Release/net8.0-windows/settings.txt
