@@ -2,7 +2,7 @@
 faafo=fuck around and find out
 qob=queen of blades
 hmb=hold my beer
-icbm=inter continental ballisttic missile
+icbm=inter continental ballistic missile
 mittrv= multiple independen tly targetable reentry vecicle
 brrrt=brrrt
 jfgi=just fucking google it
