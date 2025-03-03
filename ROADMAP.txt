@@ -13,7 +13,7 @@ Eighth one will be /insanity whereby the app scrambles letters. And doesn't stop
 Ninth one will be /discoball whereby the buttons clearly are influenced by a disco ball.
 Tenth one will be /fire (countered by /extinguisher)
 Eleventh one will be /unreveal(x,y) [self explanatory]
-Twelwth one will be /story whereby the app takes "once", "upon", "a" and "time" and places them in the grid.
+Twelwth one will be /story whereby the app takes "once", "upon", "a" and "time" and places them in the grid. Max one usage.
 ---UNDER DEVELOPMENT Thirteenth one will be /glass whereby the app takes "half" and "full" or "empty" and places them in the grid.
 Fourteenth one will be /app whereby the app hides correct amount of button columns to the left and right.
 Fifteenth one will be /random whereby the app suggests a word from random.txt.
