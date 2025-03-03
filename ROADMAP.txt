@@ -1,55 +1,71 @@
-Will add cheatcodes that all start with /
+Create defaults.cfg which says what your preferred defaults are.
+If on game start, defaults don't match the opponents, a prompt and chat is displayed for both players
+so you can agree on starting conditions for enabling commands, minigames and cheats.
+
+In the future a separate server will be made which displays open game lobbies and these settings for each server.
+
+Commands all start with %
+
+First will be %wait(seconds) whereby the app displays the circle loading thingy for that amount of time for both players.
+---UNDER DEVELOPMENT Second will be %hitler whereby the app plays a random Hitler audio sample.
+Third will be %discoball whereby the buttons clearly are influenced by a disco ball.
+Fourth will be %machinegun whereby gun sound effects are added to keypress down and release.
+Fifth will be %airwolf whereby the app displays Airwolf and the melody plays on each key press and rotors spin accordingly.
+Sixth will be %echochamber whereby, if %typewriter is already enabled, each key press echoes for both players.
+---UNDER DEVELOPMENT Seventh will be %NATO whereby the app plays NATO alphabet wav file upon key press.
+Eighth will be %drums whereby the numpad becomes a drum machine.
+Ninth will be %typewriter whereby the app sounds like a type writer.
+Tenth will be %dance wereby the app displays a random dance for ten seconds.
+Eleventh will be %launch whereby the app displays a rocket launch which lasts for ten seconds.
+Thirteenth will be %grog(volume1, percent1, volume2, percent2, ...) whereby the app calculates the alcohol percent of your grog.
+Fourteenth will be %applause whereby the app plays applause.wav for both players.
+Fifteenth will be %analogclock whereby the app becomes an analog clock for ten seconds.
+Sixteenth will be %fireworks whereby the app displays fireworks for both players for ten seconds.
+Seventeenth will be %donate whereby the app pops up my donation link.
+
+Minigames all start with #
+
+First will be #pythagoras whereby the app reduces the grid to a random triangle and the players quickly have to respond with the length of the hypothenuse.
+Next will be #tetris whereby the app becomes tetris and it plays the melody notes one by one as the players play tetris with the words.
+Third will be #censorship whereby the app allows both players to use the arrow keys to guide the censorship.
+Fourth will be #fire (countered by #extinguisher)
+Fifth will be #pinball whereby player 1 controls flipper control left and player 2 controls flipper control right.
+Sixth will be #reaction whereby the app starts the reaction minigame.
+Seventh will be #hideandseek.
+Eighth will be #twintowers whereby the app shows the twin towers, players are in each tower, and have to plan and coordinate a lunch break.
+Ninth will be #tictactoe whereby the app expands to 30x30 where the center square is your original game. Players fight in the squares to put X or O.
+
+Cheats all start with /
+
 To enable cheats one player types /sv_cheats 1 whereby second player gets prompt whether to enable cheats.
 Some cheats are valid only in phase 1 and some only in phase 2 and some in both.
 
-First one will be /pythagoras whereby the app reduces the grid to a random triangle and the players quickly have to respond with the length of the hypothenuse.
-Next one will be /tetris whereby the app becomes tetris and it plays the melody notes one by one as the players play tetris with the words.
-Third one will be /ai whereby the app suggests synonyms all the time.
-Fourth one will be /wait(milliseconds) whereby the app displays the circle loading thingy for that amount of time for both players.
-Fifth one will be /censorship whereby the app allows both players to use the arrow keys to guide the censorship...
----DONE---UNDER DEVELOPMENT Sixth one will be /hitler whereby the app plays a random hitler audio sample.
-Seventh one will be /paradox whereby the app puts a random paradox in the grid.
-Eighth one will be /insanity whereby the app scrambles letters. And doesn't stop. And becomes unresponsive.
-Ninth one will be /discoball whereby the buttons clearly are influenced by a disco ball.
-Tenth one will be /fire (countered by /extinguisher)
-Eleventh one will be /unreveal(x,y) [self explanatory]
-Twelwth one will be /story whereby the app takes "once", "upon", "a" and "time" and places them in the grid. Max one usage.
----UNDER DEVELOPMENT Thirteenth one will be /glass whereby the app takes "half" and "full" or "empty" and places them in the grid.
-Fourteenth one will be /app whereby the app hides correct amount of button columns to the left and right.
-Fifteenth one will be /random whereby the app suggests a word from random.txt.
-Sixteenth one will be /pinball whereby player 1 controls flipper control left and player 2 controls flipper control right.
-Seventeenth one will be /machinegun whereby gun sound effects are added to keypresses.
-Eighteenth one will be /woke whereby the app suggests some pronoun.
-Nineteenth one will be /airwolf whereby the app displays airwolf and the melody plays on each key press.
-Twentieth one will be /reaction whereby the app starts the reaction minigame.
-Twentyfirst one will be /echochamber whereby each key press echoes for both players.
+First will be /insanity whereby the app scrambles letters. And doesn't stop. And becomes unresponsive.
+Second will be /ai whereby the app suggests synonyms all the time.
+Third will be /paradox whereby the app puts a random paradox in the grid.
+Fourth will be /unreveal(x,y) [self explanatory]
+Fifth will be /story whereby the app takes "once", "upon", "a" and "time" and places them in the grid. Max one usage.
+---UNDER DEVELOPMENT Sixth will be /glass whereby the app takes "half" and "full" or "empty" and places them in the grid.
+Seventh will be /app whereby the app hides correct amount of button columns to the left and right.
+Eighth will be /random whereby the app suggests a word from random.txt.
+Ninth will be /woke whereby the app suggests some pronoun.
+Tenth will be /morsecode whereby the app is replaced with a button which acts as beeper.
+Eleventh will be /switch whereby the app switches green to represent the opposite color of horizontal or vertical.
+Twelwth will be /gameoflife whereby the app becomes John Conways game of life.
+Thirteenth will be /paranoia whereby the app takes a word from paranoia.txt and places it in the grid.
+Fourteenth will be /password whereby the app replaces all reveled letters with asterisk. Permanently.
+Fifteenth will be /JAS or /Gripen whereby the app places "JAS" in grid if /Gripen was typed and the opposite.
+Sixteenth will be /jesus whereby the app places "water" or "wine" in the grid.
 
-Twentysecondth one will be /morsecode whereby the app replaces hidden words with morse equivalent.
----DONE---UNDER DEVELOPMENT Twentythirdth one will be /NATO whereby the app plays NATO alphabet wav file upon key press.
-Twentyfourth one will be /switch whereby the app switches green to be the opposite color of horizontal or vertical.
-Twentyfifth one will be /gameoflife whereby the app becomes John Conways game of life.
-Twentysixth one will be /hideandseek.
-Twentyseventh one will be /paranoia.
-Twentyeighth one will be /drums whereby the numpad becomes a drum machine.
-Twentyninth one will be /typewriter whereby the app sounds like a type writer.
-Thirtieth one will be /twintowers whereby the app shows the twin towers, players are in each tower, and have to plan and coordinate lunch break.
-Thrityfirst will be /dance wereby app displays random dance.
-Thirtysecondth will be /launch whereby the app displays a rocket launch.
-Thirtythird will be /password whereby the app replaces all reveled letters with asterisk.
-Thrityfourth will be /grog(volume1, percent1, volume2, percent2, ...) whereby the app calculates the alcohol percent of your grog.
-Thirtyfifth will be /applause whereby the app plays applause.wav for both players.
-Thirtysixth will be /analogclock whereby the app becomes an analog clock for ten seconds.
-Thirtyseventh will be /tictactoe whereby the app expands to 30x30 where the center square is your original game.
-Thirtyeighth will be /fireworks whereby the app displays the fireworks for both players.
-Thirtyninth will be /JAS or /Gripen whereby the app places "JAS" in grid if /Gripen was typed and the opposite.
-Fourtieth will be /donate whereby the app pops up my donation link.
-Fourtyfirst will be /jesus whereby the app places "water" or "wine" in the grid.
+/quote(name) will pick a random line from name.txt and place in the grid. Like:
 
 /quote(southpark)
 /quote(simpsons)
 /quote(familyguy)
 /quote(lotr)
 /quote(einstein)
+
+/mergequotes(name) will merge the quotes for "name" from both players and save to hard drive.
 
 Will add score equation for solo mode
 
