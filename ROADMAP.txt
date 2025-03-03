@@ -18,7 +18,7 @@ Fourteenth one will be /app whereby the app hides correct amount of button colum
 Fifteenth one will be /random whereby the app suggests a word from random.txt.
 Sixteenth one will be /pinball whereby player 1 controls flipper control left and player 2 controls flipper control right.
 Seventeenth one will be /machinegun whereby gun sound effects are added to keypresses.
-Eighteenth one will be /wokeshit whereby the app suggests some fucking pronoun.
+Eighteenth one will be /woke whereby the app suggests some pronoun.
 Nineteenth one will be /airwolf whereby the app displays airwolf and the melody plays on each key press.
 Twentieth one will be /reaction whereby the app starts the reaction minigame.
 Twentyfirst one will be /echochamber whereby each key press echoes for both players.
@@ -34,6 +34,7 @@ Twentyninth one will be /typewriter whereby the app sounds like a type writer.
 Thirtieth one will be /twintowers whereby the app shows the twin towers, players are in each tower, and have to plan and coordinate lunch break.
 Thrityfirst will be /dance wereby app displays random dance.
 Thirtysecondth will be /launch whereby the app displays a rocket launch.
+Thirtythird will be /password whereby the app replaces all reveled letters with asterisk.
 
 /quote(southpark)
 /quote(simpsons)
