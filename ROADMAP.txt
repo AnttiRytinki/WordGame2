@@ -41,6 +41,8 @@ Thirtyfifth will be /applause whereby the app plays applause.wav for both player
 Thirtysixth will be /analogclock whereby the app becomes an analog clock for ten seconds.
 Thirtyseventh will be /tictactoe whereby the app expands to 30x30 where the center square is your original game.
 Thirtyeighth will be /fireworks whereby the app displays the fireworks for both players.
+Thirtyninth will be /JAS or /Gripen whereby the app places "JAS" in grid if /Gripen was typed and the opposite.
+Fourtieth will be /donate whereby the app pops up my donation link.
 
 /quote(southpark)
 /quote(simpsons)
