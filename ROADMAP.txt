@@ -1,4 +1,5 @@
 Will add cheatcodes that all start with /
+To enable cheats one player types /sv_cheats 1 whereby second player gets prompt whether to enable cheats.
 Some cheats are valid only in phase 1 and some only in phase 2 and some in both.
 
 First one will be /pythagoras whereby the app reduces the grid to a random triangle and the players quickly have to respond with the length of the hypothenuse.
