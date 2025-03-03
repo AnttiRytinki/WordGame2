@@ -43,6 +43,7 @@ Thirtyseventh will be /tictactoe whereby the app expands to 30x30 where the cent
 Thirtyeighth will be /fireworks whereby the app displays the fireworks for both players.
 Thirtyninth will be /JAS or /Gripen whereby the app places "JAS" in grid if /Gripen was typed and the opposite.
 Fourtieth will be /donate whereby the app pops up my donation link.
+Fourtyfirst will be /jesus whereby the app places "water" or "wine" in the grid.
 
 /quote(southpark)
 /quote(simpsons)
