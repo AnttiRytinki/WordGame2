@@ -36,6 +36,7 @@ Thrityfirst will be /dance wereby app displays random dance.
 Thirtysecondth will be /launch whereby the app displays a rocket launch.
 Thirtythird will be /password whereby the app replaces all reveled letters with asterisk.
 Thrityfourth will be /grog(volume1, percent1, volume2, percent2, ...) whereby the app calculates the alcohol percent of your grog.
+Thirtyfifth will be /applause whereby the app plays applause.wav for both players.
 
 /quote(southpark)
 /quote(simpsons)
