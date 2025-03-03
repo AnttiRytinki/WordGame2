@@ -38,6 +38,8 @@ Thirtythird will be /password whereby the app replaces all reveled letters with 
 Thrityfourth will be /grog(volume1, percent1, volume2, percent2, ...) whereby the app calculates the alcohol percent of your grog.
 Thirtyfifth will be /applause whereby the app plays applause.wav for both players.
 Thirtysixth will be /analogclock whereby the app becomes an analog clock for ten seconds.
+Thirtyseventh will be /tictactoe whereby the app expands to 30x30 where the center square is your original game.
+Thirtyeighth will be /fireworks whereby the app displays the fireworks for both players.
 
 /quote(southpark)
 /quote(simpsons)
