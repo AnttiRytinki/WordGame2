@@ -62,8 +62,9 @@ Sixteenth will be /jesus whereby the app places "water" or "wine" in the grid.
 /quote(southpark)
 /quote(simpsons)
 /quote(familyguy)
-/quote(lotr)
+/quote(lotr)			// Lord Of The Rings
 /quote(einstein)
+/quote(kith)			// Kids In The Hall
 
 /mergequotes(name) will merge the quotes for "name" from both players and save to hard drive.
 
