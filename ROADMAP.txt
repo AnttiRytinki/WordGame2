@@ -32,6 +32,8 @@ Twentyseventh one will be /paranoia.
 Twentyeighth one will be /drums whereby the numpad becomes a drum machine.
 Twentyninth one will be /typewriter whereby the app sounds like a type writer.
 Thirtieth one will be /twintowers whereby the app shows the twin towers, players are in each tower, and have to plan and coordinate lunch break.
+Thrityfirst will be /dance wereby app displays random dance.
+Thirtysecondth will be /launch whereby the app displays a rocket launch.
 
 /quote(southpark)
 /quote(simpsons)
