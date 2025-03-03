@@ -30,7 +30,8 @@ Twentyfifth one will be /gameoflife whereby the app becomes John Conways game of
 Twentysixth one will be /hideandseek.
 Twentyseventh one will be /paranoia.
 Twentyeighth one will be /drums whereby the numpad becomes a drum machine.
-Twentyninth one will be /typewriter wherebuy the app sounds like a type writer.
+Twentyninth one will be /typewriter whereby the app sounds like a type writer.
+Thirtieth one will be /twintowers whereby the app shows the twin towers, players are in each tower, and have to plan and coordinate lunch break.
 
 /quote(southpark)
 /quote(simpsons)
