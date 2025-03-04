@@ -1,4 +1,6 @@
-﻿namespace BrainStorm
+﻿using static BrainStorm.Enums;
+
+namespace BrainStorm
 {
     public class GameState
     {
@@ -13,11 +15,8 @@
         public bool LetterWasRevealed { get; set; } = false;
         public bool WordWasRevealed { get; set; } = false;
 
-        public Helpers Helpers { get; set; } = new Helpers();
-
-        public GameState(Helpers helpers)
+        public GameState()
         {
-            Helpers = helpers;
             Init();
         }
 
@@ -161,7 +160,7 @@
                 WordWasRevealed = true;
                 var word = GetWord(x, y);
 
-                if (word.Horizontal == true)
+                if (word.Direction == Direction.Horizontal)
                 {
                     for (int xx = word.X; xx < word.X + word.TheWord.Length; xx++)
                     {
@@ -173,7 +172,7 @@
                     }
                 }
 
-                else
+                if (word.Direction == Direction.Vertical)
                 {
                     for (int yy = word.Y; yy < word.Y + word.TheWord.Length; yy++)
                     {
@@ -195,19 +194,7 @@
 
             foreach (Word word in WordList)
             {
-                if (word.Horizontal == false)
-                {
-                    for (int yy = word.Y; yy < (word.Y) + word.TheWord.Length; yy++)
-                    {
-                        if (word.X == x && yy == y)
-                        {
-                            word.IsRevealed = true;
-                            foundWord = word;
-                        }
-                    }
-                }
-
-                else
+                if (word.Direction == Direction.Horizontal)
                 {
                     for (int xx = word.X; xx < (word.X) + word.TheWord.Length; xx++)
                     {
@@ -218,17 +205,29 @@
                         }
                     }
                 }
+
+                if (word.Direction == Direction.Vertical)
+                {
+                    for (int yy = word.Y; yy < (word.Y) + word.TheWord.Length; yy++)
+                    {
+                        if (word.X == x && yy == y)
+                        {
+                            word.IsRevealed = true;
+                            foundWord = word;
+                        }
+                    }
+                }
             }
 
             if (foundWord != null)
             {
-                if (foundWord.Horizontal == true)
+                if (foundWord.Direction == Direction.Horizontal)
                 {
                     for (int xx = foundWord.X; xx < foundWord.X + foundWord.TheWord.Length; xx++)
                         Reveal(xx, y, out bool b);
                 }
 
-                else
+                if (foundWord.Direction == Direction.Vertical)
                 {
                     for (int yy = foundWord.Y; yy < foundWord.Y + foundWord.TheWord.Length; yy++)
                         Reveal(x, yy, out bool b);
@@ -240,16 +239,7 @@
         {
             foreach (Word word in WordList)
             {
-                if (word.Horizontal == false)
-                {
-                    for (int yy = word.Y; yy < (word.Y) + word.TheWord.Length; yy++)
-                    {
-                        if (word.X == x && yy == y)
-                            return word;
-                    }
-                }
-
-                else
+                if (word.Direction == Direction.Horizontal)
                 {
                     for (int xx = word.X; xx < (word.X) + word.TheWord.Length; xx++)
                     {
@@ -257,9 +247,18 @@
                             return word;
                     }
                 }
+
+                if (word.Direction == Direction.Vertical)
+                {
+                    for (int yy = word.Y; yy < (word.Y) + word.TheWord.Length; yy++)
+                    {
+                        if (word.X == x && yy == y)
+                            return word;
+                    }
+                }
             }
 
-            return new Word(99, 99, "99", false);
+            return new Word();
         }
     }
 }

@@ -1,14 +1,37 @@
-﻿namespace BrainStorm
+﻿using static BrainStorm.Enums;
+
+namespace BrainStorm
 {
-    public class Helpers
+    public static class Helpers
     {
-        public bool RandBool()
+        public static bool RandBool()
         {
             var random = new Random();
             return random.Next(2) == 1;
         }
 
-        public string ReplaceAt(string input, int index, char newChar)
+        public static Direction RandDirection()
+        {
+            if (RandBool() == true)
+                return Direction.Horizontal;
+            else
+                return Direction.Vertical;
+        }
+
+        public static bool DirectionToBool(Direction direction)     // Works?
+        {
+            return direction == Direction.Horizontal;
+        }
+
+        public static Direction BoolToDirection(bool direction)     // Works?
+        {
+            if (direction)
+                return Direction.Horizontal;
+            else
+                return Direction.Vertical;
+        }
+
+        public static string ReplaceAt(string input, int index, char newChar)
         {
             if (input == null)
             {
@@ -19,7 +42,7 @@
             return new string(chars);
         }
 
-        public string StringBetween(string input, string str1, string str2)
+        public static string StringBetween(string input, string str1, string str2)
         {
             int pFrom = input.IndexOf(str1) + str1.Length;
             int pTo = input.LastIndexOf(str2);

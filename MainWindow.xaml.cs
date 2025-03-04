@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using static BrainStorm.Enums;
 
 namespace BrainStorm
 {
@@ -31,8 +32,8 @@ namespace BrainStorm
             if (File.Exists($"./settings.txt") == false)
                 InitSettingsTxt();
 
-            GameEngine.GameState = new GameState(GameEngine.Helpers);
-            GameEngine.BoardHandler = new BoardHandler(GameEngine.Helpers, GameEngine.GameState);
+            GameEngine.GameState = new GameState();
+            GameEngine.BoardHandler = new BoardHandler(GameEngine.GameState);
         }
 
         private void InitSettingsTxt()
@@ -125,11 +126,11 @@ namespace BrainStorm
                         button.Content = GameEngine.GameState.RevealedBoard[y][x];
                         var word = GameEngine.GameState.GetWord(x, y);
 
-                        if (word.Horizontal == false)
-                            button.BorderBrush = Brushes.Red;
-
-                        else
+                        if (word.Direction == Direction.Horizontal)
                             button.BorderBrush = new SolidColorBrush(Color.FromArgb(255, (byte)0, (byte)200, (byte)0));
+
+                        if (word.Direction == Direction.Vertical)
+                            button.BorderBrush = Brushes.Red;
                     }
                 }
             }
@@ -275,7 +276,7 @@ namespace BrainStorm
                         return;
                     }
 
-                    GameEngine.BoardHandler = new BoardHandler(GameEngine.Helpers, GameEngine.GameState);
+                    GameEngine.BoardHandler = new BoardHandler(GameEngine.GameState);
                     GameEngine.BoardHandler.AddToBoard(text);
 
                     AddToChatBox(text);
@@ -358,7 +359,7 @@ namespace BrainStorm
 
         private void HandleReceiveGameState(string str)
         {
-            GameEngine.GameState = new GameState(GameEngine.Helpers);
+            GameEngine.GameState = new GameState();
             GameEngine.GameState.FromString(str);
             //GameState.RevealAll();
             RenderRevealed();

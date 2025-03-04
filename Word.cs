@@ -1,20 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using static BrainStorm.Enums;
+using static BrainStorm.Helpers;
 
 namespace BrainStorm
 {
-    public class Word(int x, int y, string theWord, bool horizontal)
+    public class Word
     {
-        public Word() : this(0, 0, "", false) { }
-
-        public int X { get; set; } = x;
-        public int Y { get; set; } = y;
-        public string TheWord { get; set; } = theWord;
+        public int X { get; set; } = -1;
+        public int Y { get; set; } = -1;
+        public string TheWord { get; set; } = "";
         public bool IsRevealed { get; set; } = false;
-        public bool Horizontal { get; set; } = horizontal;
+        public Direction Direction { get; set; } = Direction.Horizontal;
+
+        public Word() 
+        {
+        }
+
+        public Word(int x, int y, string theWord, Direction direction)
+        {
+            X = x;
+            Y = y;
+            TheWord = theWord;
+            IsRevealed = false;
+            Direction = direction;
+        }
 
         public List<string> ToStringList()
         {
@@ -24,7 +32,7 @@ namespace BrainStorm
             list.Add(Y.ToString());
             list.Add(TheWord);
             list.Add(IsRevealed.ToString());
-            list.Add(Horizontal.ToString());
+            list.Add(DirectionToBool(Direction).ToString());
 
             return list;
         }
@@ -35,7 +43,7 @@ namespace BrainStorm
             Y = int.Parse(list[1]);
             TheWord = list[2];
             IsRevealed = bool.Parse(list[3]);
-            Horizontal = bool.Parse(list[4]);
+            Direction = BoolToDirection(bool.Parse(list[4]));
         }
     }
 }

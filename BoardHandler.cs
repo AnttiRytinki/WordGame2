@@ -1,13 +1,13 @@
-﻿namespace BrainStorm
+﻿using static BrainStorm.Enums;
+
+namespace BrainStorm
 {
     public class BoardHandler
     {
-        public Helpers Helpers { get; set; }
         public GameState GameState { get; set; }
 
-        public BoardHandler(Helpers helpers, GameState gameState)
+        public BoardHandler(GameState gameState)
         {
-            Helpers = helpers;
             GameState = gameState;
         }
 
@@ -20,11 +20,11 @@
                 Random rnd = new Random();
                 int x = rnd.Next(0, 9);
                 int y = rnd.Next(0, 9);
-                bool right = Helpers.RandBool();
+                Direction direction = Helpers.RandDirection();
 
                 try
                 {
-                    canAdd = TryAddToBoard(x, y, right, text, true);
+                    canAdd = TryAddToBoard(x, y, direction, text, true);
                 }
                 catch
                 {
@@ -49,11 +49,11 @@
                 Random rnd = new Random();
                 int x = rnd.Next(0, 9);
                 int y = rnd.Next(0, 9);
-                bool right = Helpers.RandBool();
+                Direction direction = Helpers.RandDirection();
 
                 try
                 {
-                    success = TryAddToBoard(x, y, right, text, false);
+                    success = TryAddToBoard(x, y, direction, text, false);
                 }
                 catch
                 {
@@ -62,7 +62,7 @@
 
                 if (success)
                 {
-                    GameState.WordList.Add(new Word(x, y, text, right));
+                    GameState.WordList.Add(new Word(x, y, text, direction));
 
                     return true;
                 }
@@ -71,9 +71,9 @@
             return false;
         }
 
-        public bool TryAddToBoard(int x, int y, bool right, string text, bool test)
+        public bool TryAddToBoard(int x, int y, Direction direction, string text, bool test)
         {
-            if (right)
+            if (direction == Direction.Horizontal)
             {
                 if (BoardSpaceRightIsEmpty(x, y, text.Length))
                 {
@@ -87,7 +87,7 @@
                     return false;
             }
 
-            else
+            if (direction == Direction.Vertical)
             {
                 if (BoardSpaceDownIsEmpty(x, y, text.Length))
                 {
@@ -100,6 +100,8 @@
                 else
                     return false;
             }
+
+            return false;   // Never happens
         }
 
         private void PutStringInBoardRight(int x, int y, string text)
