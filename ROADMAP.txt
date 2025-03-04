@@ -1,5 +1,5 @@
 
-Will create Solo Mode, Hot Seat Mode and Online Mode
+Will create Solo Mode, Versus AI Mode, Hot Seat Mode and Online Mode
 
 Will add score equation for solo mode.
 
