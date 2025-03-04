@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrainStorm", "BrainStorm.csproj", "{FBA3786E-8985-449E-B127-5FCFC8F25A13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrainStormTests", "..\BrainStormTests\BrainStormTests.csproj", "{A9E33BE3-FD30-4F1A-A631-F99C0BC88924}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FBA3786E-8985-449E-B127-5FCFC8F25A13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBA3786E-8985-449E-B127-5FCFC8F25A13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBA3786E-8985-449E-B127-5FCFC8F25A13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9E33BE3-FD30-4F1A-A631-F99C0BC88924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E33BE3-FD30-4F1A-A631-F99C0BC88924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E33BE3-FD30-4F1A-A631-F99C0BC88924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E33BE3-FD30-4F1A-A631-F99C0BC88924}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
