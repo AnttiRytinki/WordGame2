@@ -411,12 +411,5 @@ namespace BrainStorm
 
             chatBox.Text += text + "\n";
         }
-
-        private void SetInputBox(SolidColorBrush brush, string text, bool isEnabled)
-        {
-            inputBox.Background = brush;
-            inputBox.Text = text;
-            inputBox.IsEnabled = isEnabled;
-        }
     }
 }
