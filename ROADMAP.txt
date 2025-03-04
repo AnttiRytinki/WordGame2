@@ -49,7 +49,7 @@ You can only ask once each game.
 Some cheats are valid only in phase 1 and some only in phase 2 and some in both.
 
 First will be /insanity whereby the app scrambles letters. And doesn't stop. And becomes unresponsive.
-Second will be /ai whereby the app suggests synonyms all the time.
+Second will be /jesus whereby the app places "water" or "wine" in the grid.
 Third will be /paradox whereby the app puts a random paradox in the grid.
 Fourth will be /unreveal(x,y) [self explanatory]
 Fifth will be /story whereby the app takes "once", "upon", "a" and "time" and places them in the grid. Max one usage.
@@ -63,7 +63,6 @@ Twelwth will be /gameoflife whereby the app becomes John Conways game of life.
 Thirteenth will be /paranoia whereby the app takes a word from paranoia.txt and places it in the grid.
 Fourteenth will be /password whereby the app replaces all reveled letters with asterisk. Permanently.
 Fifteenth will be /JAS or /Gripen whereby the app places "JAS" in grid if /Gripen was typed and the opposite.
-Sixteenth will be /jesus whereby the app places "water" or "wine" in the grid.
 
 /quote(name) will pick a random line from name.txt and place in the grid. Like:
 
