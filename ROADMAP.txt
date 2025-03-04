@@ -3,7 +3,7 @@ Will create Solo Mode, Hot Seat Mode and Online Mode
 
 Will add score equation for solo mode.
 
-Will add scrabble points for the letters.
+Will add scrabble points for the letters?
 
 Create defaults.cfg which says what your preferred defaults are.
 If on game start, defaults don't match the opponents, a prompt and chat is displayed for both players
