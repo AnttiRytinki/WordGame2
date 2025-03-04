@@ -11,6 +11,7 @@ namespace BrainStorm
     {
         public GameCom GameCom { get; set; } = new GameCom();
         public GameEngine GameEngine { get; set; } = new GameEngine();
+        public GameInputBox GameInputBox { get; set; } = new GameInputBox();
         public AudioHandler AudioHandler { get; set; } = new AudioHandler();
 
         int _lastClickedX = 0;
@@ -61,9 +62,8 @@ namespace BrainStorm
             if (_buttonsEnabled == false)
                 return;
 
-            inputBox.Background = Brushes.Red;
-            inputBox.Text = "";
-            inputBox.IsEnabled = false;
+            GameInputBox.OppTurn();
+            inputBox = GameInputBox.UpdateTextBox(inputBox);
 
             string buttonName = ((Button)sender).Name;
             int x = int.Parse(buttonName[1].ToString());
@@ -78,15 +78,13 @@ namespace BrainStorm
 
             if (letterWasRevealed)
             {
-                inputBox.Background = Brushes.White;
-                inputBox.Text = "";
-                inputBox.IsEnabled = true;
+                GameInputBox.MyTurn();
+                inputBox = GameInputBox.UpdateTextBox(inputBox);
 
                 if (wordWasRevealed)
                 {
-                    inputBox.Background = Brushes.Red;
-                    inputBox.Text = "";
-                    inputBox.IsEnabled = false;
+                    GameInputBox.OppTurn();
+                    inputBox = GameInputBox.UpdateTextBox(inputBox);
 
                     if (GameCom.GameServer != null)
                         GameEngine.GameState.PointsPlayerA = GameEngine.GameState.PointsPlayerA + 1;
@@ -166,8 +164,9 @@ namespace BrainStorm
 
             if (e.Key == Key.Enter)
             {
-                inputBox.Background = Brushes.White;
                 string text = ((TextBox)sender).Text;
+                GameInputBox.Brush = Brushes.White;
+                inputBox = GameInputBox.UpdateTextBox(inputBox);
 
                 if (text == $"/NATO")
                 {
@@ -197,9 +196,8 @@ namespace BrainStorm
                         SetAllButtons(false);
                         ShowGamePoints();
 
-                        inputBox.Background = Brushes.Red;
-                        inputBox.Text = "";
-                        inputBox.IsEnabled = false;
+                        GameInputBox.OppTurn();
+                        inputBox = GameInputBox.UpdateTextBox(inputBox);
 
                         if (GameCom.GameServer != null)
                             GameCom.GameServer.SendString(GameEngine.GameState.ToString());
@@ -224,7 +222,9 @@ namespace BrainStorm
                     else
                         return;
 
-                    inputBox.Text = "";
+                    GameInputBox.Text = "";
+                    inputBox = GameInputBox.UpdateTextBox(inputBox);
+
                     Thread.Sleep(1000);
                     GameCom.GameServer.SendString("-GAME START-");
 
@@ -263,9 +263,8 @@ namespace BrainStorm
 
                         ShowGamePoints();
 
-                        inputBox.Background = Brushes.Red;
-                        inputBox.Text = "";
-                        inputBox.IsEnabled = false;
+                        GameInputBox.OppTurn();
+                        inputBox = GameInputBox.UpdateTextBox(inputBox);
 
                         if (GameCom.GameServer != null)
                             GameCom.GameServer.SendString(GameEngine.GameState.ToString());
@@ -293,9 +292,8 @@ namespace BrainStorm
                         GameCom.GameClient.SendString(GameEngine.GameState.ToString());
                     }
 
-                    inputBox.Background = Brushes.Red;
-                    inputBox.Text = "";
-                    inputBox.IsEnabled = false;
+                    GameInputBox.OppTurn();
+                    inputBox = GameInputBox.UpdateTextBox(inputBox);
                 }
 
                 else if (GameEngine.GameState.Phase == "[PHASE2]")
@@ -322,9 +320,8 @@ namespace BrainStorm
 
                     ShowGamePoints();
 
-                    inputBox.Background = Brushes.Red;
-                    inputBox.Text = "";
-                    inputBox.IsEnabled = false;
+                    GameInputBox.OppTurn();
+                    inputBox = GameInputBox.UpdateTextBox(inputBox);
                 }
             }
         }
@@ -374,9 +371,8 @@ namespace BrainStorm
 
             if (GameEngine.GameState.LetterWasRevealed == false || GameEngine.GameState.WordWasRevealed == true)
             {
-                inputBox.Background = Brushes.White;
-                inputBox.Text = "";
-                inputBox.IsEnabled = true;
+                GameInputBox.MyTurn();
+                inputBox = GameInputBox.UpdateTextBox(inputBox);
             }
 
             GameEngine.GameState.LetterWasRevealed = false;
@@ -400,6 +396,9 @@ namespace BrainStorm
             }
         }
 
+        /// <summary>
+        /// Add text to chatBox and only display the three last entries
+        /// </summary>
         private void AddToChatBox(string text)
         {
             int newlineCount = chatBox.Text.Count(f => f == '\n');
@@ -411,6 +410,13 @@ namespace BrainStorm
             }
 
             chatBox.Text += text + "\n";
+        }
+
+        private void SetInputBox(SolidColorBrush brush, string text, bool isEnabled)
+        {
+            inputBox.Background = brush;
+            inputBox.Text = text;
+            inputBox.IsEnabled = isEnabled;
         }
     }
 }
