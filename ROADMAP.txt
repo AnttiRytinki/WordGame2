@@ -1,3 +1,10 @@
+
+Will create Solo Mode, Hot Seat Mode and Online Mode
+
+Will add score equation for solo mode.
+
+Will add scrabble points for the letters.
+
 Create defaults.cfg which says what your preferred defaults are.
 If on game start, defaults don't match the opponents, a prompt and chat is displayed for both players
 so you can agree on starting conditions for enabling commands, minigames and cheats.
@@ -67,8 +74,6 @@ Sixteenth will be /jesus whereby the app places "water" or "wine" in the grid.
 /quote(kith)			// Kids In The Hall
 
 /mergequotes(name) will merge the quotes for "name" from both players and save to hard drive.
-
-Will add score equation for solo mode
 
 -----------------------
 
