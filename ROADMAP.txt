@@ -45,6 +45,7 @@ Ninth will be #tictactoe whereby the app expands to 30x30 where the center squar
 Cheats all start with /
 
 To enable cheats one player types /sv_cheats 1 whereby second player gets prompt whether to enable cheats.
+You can only ask once each game.
 Some cheats are valid only in phase 1 and some only in phase 2 and some in both.
 
 First will be /insanity whereby the app scrambles letters. And doesn't stop. And becomes unresponsive.
