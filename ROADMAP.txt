@@ -29,9 +29,13 @@ Commands all start with %
 %grog(volume1, percent1, volume2, percent2, ...) whereby the app calculates the alcohol percent of your grog.
 %applause whereby the app plays applause.wav for both players.
 
-Minigames that start with #
+Minigames (or rather, game continuations) that start with #
 
-#tictactoe whereby the app expands to 30x30 where the center square is your original game. Players fight in the squares to put X or O.
+#tictactoe whereby the app expands to 30x30 where the center square is your original game,
+Players fight in the squares to put X or O,
+When board has been fully revealed.
+
+#robovacuum whereby the app places a smart robotic vacuum cleaner in your fully revealed board
 
 Cheats all start with /
 
@@ -39,7 +43,6 @@ To enable cheats one player types /sv_cheats 1 whereby second player gets prompt
 You can only ask once each game.
 Some cheats are valid only in phase 1 and some only in phase 2 and some in both.
 
-/insanity whereby the app scrambles letters. And doesn't stop. And becomes unresponsive.
 /jesus whereby the app places "water" or "wine" in the grid.
 /paradox whereby the app puts a random paradox in the grid.
 /unreveal(x,y) [self explanatory]
