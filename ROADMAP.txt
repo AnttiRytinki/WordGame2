@@ -6,7 +6,8 @@ Solo mode will work as follows:
 In phase 1, game picks words from wordlist.txt, where this file contains words of max length 10.
 Adds words to chat box in 1 second intervals.
 In phase 2, player has to find all the words as fast as possible.
-Score equation will be K/T where K is some constant to be determined,
+Score equation will be K/(C*T) where K is some constant to be determined,
+C is the number of button clicks made,
 and T is the time in milliseconds it took for the player to find all the words.
 
 Will add scrabble points for the letters?
@@ -20,7 +21,7 @@ In the future a separate server will be made which displays open game lobbies an
 Commands all start with %
 
 First will be %wait(seconds) whereby the app displays the circle loading thingy for that amount of time for both players.
----UNDER DEVELOPMENT Second will be %hitler whereby the app plays a random Hitler audio sample.
+Second will be %donate whereby the app pops up my donation link.
 Third will be %discoball whereby the buttons clearly are influenced by a disco ball.
 Fourth will be %machinegun whereby gun sound effects are added to keypress down and release.
 Fifth will be %airwolf whereby the app displays Airwolf and the melody plays on each key press and rotors spin accordingly.
@@ -34,7 +35,6 @@ Thirteenth will be %grog(volume1, percent1, volume2, percent2, ...) whereby the 
 Fourteenth will be %applause whereby the app plays applause.wav for both players.
 Fifteenth will be %analogclock whereby the app becomes an analog clock for ten seconds.
 Sixteenth will be %fireworks whereby the app displays fireworks for both players for ten seconds.
-Seventeenth will be %donate whereby the app pops up my donation link.
 
 Minigames all start with #
 
