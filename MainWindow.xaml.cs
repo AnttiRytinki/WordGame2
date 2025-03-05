@@ -19,6 +19,7 @@ namespace BrainStorm
         int _lastClickedY = 0;
 
         bool _iAmServer = false;
+        bool _gameHasStarted = false;
 
         bool _buttonsEnabled = false;
         bool _natoWavEnabled = false;
@@ -28,40 +29,26 @@ namespace BrainStorm
             InitializeComponent();
 
             SetAllButtonProperties();
-            SetAllButtons(false);
+            _buttonsEnabled = false;
 
             if (File.Exists($"./memory.txt") == false)
                 File.Create($"./memory.txt");
 
-            if (File.Exists($"./settings.txt") == false)
-                InitSettingsTxt();
+            if (File.Exists($"./settings.cfg") == false)
+                InitSettingsCfg();
 
             GameEngine.GameState = new GameState();
             GameEngine.BoardHandler = new BoardHandler(GameEngine.GameState);
         }
 
-        private void InitSettingsTxt()
+        private void InitSettingsCfg()
         {
-            File.Create($"./settings.txt");
+            File.Create($"./settings.cfg");
             // TODO
-        }
-
-        private void SetAllButtons(bool enabled)
-        {
-            _buttonsEnabled = enabled;
         }
 
         private void Button_Click(object sender, MouseButtonEventArgs e)
         {
-            //if (e.LeftButton == MouseButtonState.Pressed)
-            //    ;
-
-            //else if (e.RightButton == MouseButtonState.Pressed)
-            //    ;
-
-            //else
-            //    return;
-
             if (_buttonsEnabled == false)
                 return;
 
@@ -75,7 +62,7 @@ namespace BrainStorm
             _lastClickedX = x;
             _lastClickedY = y;
 
-            SetAllButtons(false);
+            _buttonsEnabled = false;
             bool wordWasRevealed = false;
             bool letterWasRevealed = GameEngine.GameState.Reveal(x, y, out wordWasRevealed);
 
@@ -175,7 +162,7 @@ namespace BrainStorm
                 GameInputBox.Brush = Brushes.White;
                 inputBox = GameInputBox.UpdateTextBox(inputBox);
 
-                if (text == $"/NATO")
+                if (text == $"%NATO")
                 {
                     if (_natoWavEnabled == false)
                         _natoWavEnabled = true;
@@ -188,7 +175,7 @@ namespace BrainStorm
                     if (GameEngine.GameState.Phase == "[PHASE2]")
                     {
                         GameEngine.GameState.LetterWasRevealed = false;
-                        SetAllButtons(false);
+                        _buttonsEnabled = false;
 
                         if (_iAmServer)
                             chatBox = GameChatBox.ShowGamePoints(chatBox, GameEngine.GameState.PointsPlayerA, GameEngine.GameState.PointsPlayerB);
@@ -226,12 +213,13 @@ namespace BrainStorm
                     inputBox = GameInputBox.UpdateTextBox(inputBox);
 
                     Thread.Sleep(1000);
+                    _gameHasStarted = true;
                     GameCom.GameServer.SendString("-GAME START-");
 
                     return;
                 }
 
-                else if (Char.IsDigit(text[0]))
+                else if (Helpers.IsValidIP(text) && (_gameHasStarted == false))
                 {
                     GameCom.InitClient(text);
                     _iAmServer = false;
@@ -243,6 +231,7 @@ namespace BrainStorm
 
                     inputBox.Text = "";
                     Thread.Sleep(1000);
+                    _gameHasStarted = true;
                     GameCom.GameClient.SendString("-GAME START-");
 
                     return;
@@ -260,7 +249,7 @@ namespace BrainStorm
                     if (canAddToBoard == false || WillBoardCoverageBeAbove(50, text))
                     {
                         GameEngine.GameState.Phase = "[PHASE2]";
-                        SetAllButtons(false);
+                        _buttonsEnabled = false;
 
                         if (_iAmServer)
                             chatBox = GameChatBox.ShowGamePoints(chatBox, GameEngine.GameState.PointsPlayerA, GameEngine.GameState.PointsPlayerB);
@@ -381,7 +370,7 @@ namespace BrainStorm
                     chatBox = GameChatBox.ShowGamePoints(chatBox, GameEngine.GameState.PointsPlayerB, GameEngine.GameState.PointsPlayerA);
 
                 if (GameEngine.GameState.LetterWasRevealed == false)
-                    SetAllButtons(true);
+                    _buttonsEnabled = true;
             }
 
             if (GameEngine.GameState.LetterWasRevealed == false || GameEngine.GameState.WordWasRevealed == true)

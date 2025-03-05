@@ -7,6 +7,7 @@ namespace BrainStorm
         public static bool RandBool()
         {
             var random = new Random();
+
             return random.Next(2) == 1;
         }
 
@@ -39,6 +40,7 @@ namespace BrainStorm
             }
             char[] chars = input.ToCharArray();
             chars[index] = newChar;
+
             return new string(chars);
         }
 
@@ -48,6 +50,13 @@ namespace BrainStorm
             int pTo = input.LastIndexOf(str2);
 
             return input.Substring(pFrom, pTo - pFrom);
+        }
+
+        public static bool IsValidIP(string ip)
+        {
+            System.Net.IPAddress? ipAddr;
+
+            return System.Net.IPAddress.TryParse(ip, out ipAddr);
         }
     }
 }
