@@ -28,7 +28,7 @@ namespace BrainStorm
         {
             InitializeComponent();
 
-            SetAllButtonProperties();
+            InitAllButtons();
             _buttonsEnabled = false;
 
             if (File.Exists($"./memory.txt") == false)
@@ -128,7 +128,7 @@ namespace BrainStorm
             }
         }
 
-        private void SetAllButtonProperties()
+        private void InitAllButtons()
         {
             for (int x = 0; x < 10; x++)
             {
@@ -158,11 +158,11 @@ namespace BrainStorm
 
             if (e.Key == Key.Enter)
             {
-                string text = ((TextBox)sender).Text;
+                GameInputBox.Text = ((TextBox)sender).Text;
                 GameInputBox.Brush = Brushes.White;
                 inputBox = GameInputBox.UpdateTextBox(inputBox);
 
-                if (text == $"%NATO")
+                if (GameInputBox.Text == $"%NATO")
                 {
                     if (_natoWavEnabled == false)
                         _natoWavEnabled = true;
@@ -170,7 +170,7 @@ namespace BrainStorm
                         _natoWavEnabled = false;
                 }
 
-                if (text == "")
+                if (GameInputBox.Text == "")
                 {
                     if (GameEngine.GameState.Phase == "[PHASE2]")
                     {
@@ -196,10 +196,10 @@ namespace BrainStorm
                         return;
                 }
 
-                else if (text.Contains(" ") || ((text.Length > 10) && !text.Contains("startserver")))
+                else if (GameInputBox.Text.Contains(" ") || ((GameInputBox.Text.Length > 10) && !GameInputBox.Text.Contains("startserver")))
                     return;
 
-                else if (text.Contains("startserver"))
+                else if (GameInputBox.Text.Contains("startserver"))
                 {
                     GameCom.InitServer();
                     _iAmServer = true;
@@ -219,9 +219,9 @@ namespace BrainStorm
                     return;
                 }
 
-                else if (Helpers.IsValidIP(text) && (_gameHasStarted == false))
+                else if (Helpers.IsValidIP(GameInputBox.Text) && (_gameHasStarted == false))
                 {
-                    GameCom.InitClient(text);
+                    GameCom.InitClient(GameInputBox.Text);
                     _iAmServer = false;
 
                     if (_iAmServer == false)
@@ -239,14 +239,14 @@ namespace BrainStorm
 
                 else if (GameEngine.GameState.Phase == "[PHASE1]")
                 {
-                    bool canAddToBoard = GameEngine.BoardHandler.CanAddToBoard(text);
+                    bool canAddToBoard = GameEngine.BoardHandler.CanAddToBoard(GameInputBox.Text);
 
                     using (StreamWriter sw = File.AppendText($"./memory.txt"))
                     {
-                        sw.WriteLine(System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " --- " + text + "\n");
+                        sw.WriteLine(System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " --- " + GameInputBox.Text + "\n");
                     }
 
-                    if (canAddToBoard == false || WillBoardCoverageBeAbove(50, text))
+                    if (canAddToBoard == false || WillBoardCoverageBeAbove(50, GameInputBox.Text))
                     {
                         GameEngine.GameState.Phase = "[PHASE2]";
                         _buttonsEnabled = false;
@@ -269,19 +269,19 @@ namespace BrainStorm
                     }
 
                     GameEngine.BoardHandler = new BoardHandler(GameEngine.GameState);
-                    GameEngine.BoardHandler.AddToBoard(text);
+                    GameEngine.BoardHandler.AddToBoard(GameInputBox.Text);
 
-                    chatBox = GameChatBox.Add(chatBox, text);
+                    chatBox = GameChatBox.Add(chatBox, GameInputBox.Text);
 
                     if (_iAmServer)
                     {
-                        GameCom.GameServer.SendString(text);
+                        GameCom.GameServer.SendString(GameInputBox.Text);
                         GameCom.GameServer.SendString(GameEngine.GameState.ToString());
                     }
 
                     else
                     {
-                        GameCom.GameClient.SendString(text);
+                        GameCom.GameClient.SendString(GameInputBox.Text);
                         GameCom.GameClient.SendString(GameEngine.GameState.ToString());
                     }
 
@@ -291,7 +291,7 @@ namespace BrainStorm
 
                 else if (GameEngine.GameState.Phase == "[PHASE2]")
                 {
-                    if (GameEngine.GameState.GetWord(_lastClickedX, _lastClickedY).TheWord == text)
+                    if (GameEngine.GameState.GetWord(_lastClickedX, _lastClickedY).TheWord == GameInputBox.Text)
                     {
                         GameEngine.GameState.RevealWord(_lastClickedX, _lastClickedY);
                         RenderRevealed();
