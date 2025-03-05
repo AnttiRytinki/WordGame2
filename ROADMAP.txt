@@ -2,6 +2,12 @@
 Will create Solo Mode, Versus AI Mode, Hot Seat Mode and Online Mode
 
 Will add score equation for solo mode.
+Solo mode will work as follows:
+In phase 1, game picks words from wordlist.txt, where this file contains words of max length 10.
+Adds words to chat box in 1 second intervals.
+In phase 2, player has to find all the words as fast as possible.
+Score equation will be K/T where K is some constant to be determined,
+and T is the time in milliseconds it took for the player to find all the words.
 
 Will add scrabble points for the letters?
 
