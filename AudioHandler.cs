@@ -85,13 +85,9 @@ namespace BrainStorm
             }
         }
 
-        public void PlayRandomHitlerSample()
+        public void PlayRandomSample(string name)   // TODO
         {
-            _selectedSamples.Add(new AudioFileReader(new AudioSample("Hitler_01", ".//wav//hitler//Hitler_01.wav").Path));
-            _selectedSamples.Add(new AudioFileReader(new AudioSample("Hitler_02", ".//wav//hitler//Hitler_02.wav").Path));
-            _selectedSamples.Add(new AudioFileReader(new AudioSample("Hitler_03", ".//wav//hitler//Hitler_03.wav").Path));
-            _selectedSamples.Add(new AudioFileReader(new AudioSample("Hitler_04", ".//wav//hitler//Hitler_04.wav").Path));
-            _selectedSamples.Add(new AudioFileReader(new AudioSample("Hitler_05", ".//wav//hitler//Hitler_05.wav").Path));
+            _selectedSamples.Add(new AudioFileReader(new AudioSample(name, ".//wav//samples//" + name + ".wav").Path));
 
             Random rnd = new Random();
             int idx = rnd.Next(0, 5);

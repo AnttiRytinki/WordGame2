@@ -183,18 +183,6 @@ namespace BrainStorm
                         _natoWavEnabled = false;
                 }
 
-                if (text == $"/hitler")
-                {
-                    try
-                    {
-                        AudioHandler.PlayRandomHitlerSample();
-                    }
-                    catch 
-                    {
-                        ;
-                    }
-                }
-
                 if (text == "")
                 {
                     if (GameEngine.GameState.Phase == "[PHASE2]")
