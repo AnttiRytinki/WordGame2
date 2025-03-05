@@ -2,5 +2,3 @@
 Game should end when all words have been discovered.
 
 Non-Active player should not be able to type during phase 2.
-
-Audio should overlap, not concatenate.

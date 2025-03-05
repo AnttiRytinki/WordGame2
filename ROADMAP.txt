@@ -18,12 +18,14 @@ so you can agree on starting conditions for enabling commands, minigames and che
 
 In the future a separate server will be made which displays open game lobbies and these settings for each server.
 
+Local settings will include "Allow Audio" flag.
+
 Commands all start with %
 
 %wait(seconds) whereby the app displays the circle loading thingy for that amount of time for both players.
 %donate whereby the app pops up my donation link.
 %machinegun whereby gun sound effects are added to keypress down and release.
----UNDER DEVELOPMENT %NATO whereby the app plays NATO alphabet wav file upon key press.
+---DONE %NATO whereby the app plays NATO alphabet wav file upon key press.
 %drums whereby the numpad becomes a drum machine.
 %typewriter whereby the app sounds like a type writer.
 %grog(volume1, percent1, volume2, percent2, ...) whereby the app calculates the alcohol percent of your grog.

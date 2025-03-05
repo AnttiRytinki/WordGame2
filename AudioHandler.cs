@@ -4,80 +4,128 @@ using System.Windows.Input;
 
 namespace BrainStorm
 {
+    /*
+    
+    // on startup:
+    var zap = new CachedSound("zap.wav");
+    var boom = new CachedSound("boom.wav");
+
+    // later in the app...
+    AudioPlaybackEngine.Instance.PlaySound(zap);
+    AudioPlaybackEngine.Instance.PlaySound(boom);
+    AudioPlaybackEngine.Instance.PlaySound("crash.wav");
+
+    // on shutdown
+    AudioPlaybackEngine.Instance.Dispose();
+
+    */
+
     public class AudioHandler
     {
-        List<ISampleProvider> _selectedSamples = new List<ISampleProvider>();
-        ConcatenatingSampleProvider? _fullAudio;
-        WaveOutEvent _wavPlayer = new WaveOutEvent();
+        public List<CachedSound> CachedSounds { get; set; } = new List<CachedSound>();
 
-        public void HandleQWERTYAudio(Key key)
+        public AudioHandler()
         {
-            if (key == Key.A)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("AlphaSample", ".//wav//NATO//ALPHA.wav").Path));
-            else if (key == Key.B)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("BravoSample", ".//wav//NATO//BRAVO.wav").Path));
-            else if (key == Key.C)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("CharlieSample", ".//wav//NATO//CHARLIE.wav").Path));
-            else if (key == Key.D)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("DeltaSample", ".//wav//NATO//DELTA.wav").Path));
-            else if (key == Key.E)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("EchoSample", ".//wav//NATO//ECHO.wav").Path));
-            else if (key == Key.F)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("FoxtrotSample", ".//wav//NATO//FOXTROT.wav").Path));
-            else if (key == Key.G)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("GolfSample", ".//wav//NATO//GOLF.wav").Path));
-            else if (key == Key.H)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("HotelSample", ".//wav//NATO//HOTEL.wav").Path));
-            else if (key == Key.I)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("IndiaSample", ".//wav//NATO//INDIA.wav").Path));
-            else if (key == Key.J)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("JulietSample", ".//wav//NATO//JULIET.wav").Path));
-            else if (key == Key.K)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("KiloSample", ".//wav//NATO//KILO.wav").Path));
-            else if (key == Key.L)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("LimaSample", ".//wav//NATO//LIMA.wav").Path));
-            else if (key == Key.M)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("MikeSample", ".//wav//NATO//MIKE.wav").Path));
-            else if (key == Key.N)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("NovemberSample", ".//wav//NATO//NOVEMBER.wav").Path));
-            else if (key == Key.O)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("OscarSample", ".//wav//NATO//OSCAR.wav").Path));
-            else if (key == Key.P)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("PapaSample", ".//wav//NATO//PAPA.wav").Path));
-            else if (key == Key.Q)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("QuebecSample", ".//wav//NATO//QUEBEC.wav").Path));
-            else if (key == Key.R)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("RomeoSample", ".//wav//NATO//ROMEO.wav").Path));
-            else if (key == Key.S)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("SierraSample", ".//wav//NATO//SIERRA.wav").Path));
-            else if (key == Key.T)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("TangoSample", ".//wav//NATO//TANGO.wav").Path));
-            else if (key == Key.U)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("UniformSample", ".//wav//NATO//UNIFORM.wav").Path));
-            else if (key == Key.V)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("VictorSample", ".//wav//NATO//VICTOR.wav").Path));
-            else if (key == Key.W)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("WhiskeySample", ".//wav//NATO//WHISKEY.wav").Path));
-            else if (key == Key.X)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("XraySample", ".//wav//NATO//XRAY.wav").Path));
-            else if (key == Key.Y)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("YankeeSample", ".//wav//NATO//YANKEE.wav").Path));
-            else if (key == Key.Z)
-                _selectedSamples.Add(new AudioFileReader(new AudioSample("ZuluSample", ".//wav//NATO//ZULU.wav").Path));
+            Init();
+        }
 
+        public void Init()
+        {
+            CachedSounds.Add(new CachedSound(".//wav//NATO//ALPHA.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//BRAVO.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//CHARLIE.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//DELTA.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//ECHO.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//FOXTROT.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//GOLF.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//HOTEL.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//INDIA.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//JULIET.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//KILO.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//LIMA.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//MIKE.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//NOVEMBER.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//OSCAR.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//PAPA.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//QUEBEC.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//ROMEO.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//SIERRA.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//TANGO.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//UNIFORM.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//VICTOR.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//WHISKEY.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//XRAY.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//YANKEE.wav"));
+            CachedSounds.Add(new CachedSound(".//wav//NATO//ZULU.wav"));
+        }
+
+        public CachedSound GetSoundByName(string name)
+        {
+            foreach (CachedSound sound in CachedSounds)
+            {
+                if (sound.AudioFileName.Contains(name))
+                    return sound;
+            }
+
+            return null;
+        }
+
+        public void PlayNATOAudio(Key key)
+        {
             try
             {
-                _fullAudio = new ConcatenatingSampleProvider(_selectedSamples);
-
-                try
-                {
-                    _wavPlayer.Init(_fullAudio);
-                    _wavPlayer.Play();
-                }
-                catch
-                {
-                    ;
-                }
+                if (key == Key.A)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("ALPHA"));
+                else if (key == Key.B)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("BETA"));
+                else if (key == Key.C)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("CHARLIE"));
+                else if (key == Key.D)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("DELTA"));
+                else if (key == Key.E)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("ECHO"));
+                else if (key == Key.F)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("FOXTROT"));
+                else if (key == Key.G)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("GOLF"));
+                else if (key == Key.H)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("HOTEL"));
+                else if (key == Key.I)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("INDIA"));
+                else if (key == Key.J)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("JULIET"));
+                else if (key == Key.K)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("KILO"));
+                else if (key == Key.L)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("LIMA"));
+                else if (key == Key.M)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("MIKE"));
+                else if (key == Key.N)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("NOVEMBER"));
+                else if (key == Key.O)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("OSCAR"));
+                else if (key == Key.P)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("PAPA"));
+                else if (key == Key.Q)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("QUEBEC"));
+                else if (key == Key.R)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("ROMEO"));
+                else if (key == Key.S)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("SIERRA"));
+                else if (key == Key.T)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("TANGO"));
+                else if (key == Key.U)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("UNIFORM"));
+                else if (key == Key.V)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("VICTOR"));
+                else if (key == Key.W)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("WHISKEY"));
+                else if (key == Key.X)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("XRAY"));
+                else if (key == Key.Y)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("YANKEE"));
+                else if (key == Key.Z)
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("ZULU"));
             }
             catch
             {
@@ -85,28 +133,9 @@ namespace BrainStorm
             }
         }
 
-        public void PlayRandomSample(string name)   // TODO
+        public void PlayRandomSample(string path)   // TODO - play random sample from path
         {
-            _selectedSamples.Add(new AudioFileReader(new AudioSample(name, ".//wav//samples//" + name + ".wav").Path));
 
-            Random rnd = new Random();
-            int idx = rnd.Next(0, 5);
-
-            var _oneSelectedSamples = new List<ISampleProvider>();
-            var _selectedSample = _selectedSamples[idx];
-            _oneSelectedSamples.Add(_selectedSample);
-
-            _fullAudio = new ConcatenatingSampleProvider(_oneSelectedSamples);
-
-            try
-            {
-                _wavPlayer.Init(_fullAudio);
-                _wavPlayer.Play();
-            }
-            catch
-            {
-                ;
-            }
         }
     }
 }

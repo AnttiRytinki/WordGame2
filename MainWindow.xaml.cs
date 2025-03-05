@@ -145,16 +145,7 @@ namespace BrainStorm
         private void inputBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (_natoWavEnabled)
-            {
-                try
-                {
-                    AudioHandler.HandleQWERTYAudio(e.Key);
-                }
-                catch
-                {
-                    ;
-                }
-            }
+                AudioHandler.PlayNATOAudio(e.Key);
 
             if (e.Key == Key.Enter)
             {
@@ -168,6 +159,8 @@ namespace BrainStorm
                         _natoWavEnabled = true;
                     else if (_natoWavEnabled == true)
                         _natoWavEnabled = false;
+
+                    return;
                 }
 
                 if (GameInputBox.Text == "")
