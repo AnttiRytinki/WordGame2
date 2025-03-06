@@ -3,7 +3,7 @@ Will create Solo Mode, Versus AI Mode, Hot Seat Mode and Online Mode
 
 Will add score equation for solo mode.
 Solo mode will work as follows:
-In phase 1, player types words as usual, where words are of max length 10.
+In phase 1, game gets and displays words from wordlist at 1 second intervals, where words are of max length 10.
 In phase 2, player has to find all the words as fast as possible.
 Score equation will be K/(C*T) where K is some constant to be determined,
 C is the number of button clicks made,
