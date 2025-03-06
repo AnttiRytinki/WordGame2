@@ -29,7 +29,6 @@ namespace BrainStorm
             InitializeComponent();
 
             InitAllButtons();
-            _buttonsEnabled = false;
 
             if (File.Exists($"./memory.txt") == false)
                 File.Create($"./memory.txt");
@@ -92,10 +91,10 @@ namespace BrainStorm
 
             RenderRevealed();
 
-            if (GameCom.GameServer != null)
+            if (_iAmServer)
                 GameCom.GameServer.SendString(GameEngine.GameState.ToString());
 
-            else if (GameCom.GameClient != null)
+            else
                 GameCom.GameClient.SendString(GameEngine.GameState.ToString());
         }
 
