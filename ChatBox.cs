@@ -1,8 +1,8 @@
 ﻿namespace BrainStorm
 {
-    public class GameChatBox
+    public class ChatBox
     {
-        public GameChatBox()
+        public ChatBox()
         {
         }
 

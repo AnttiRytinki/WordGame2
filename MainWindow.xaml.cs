@@ -9,10 +9,10 @@ namespace BrainStorm
 {
     public partial class MainWindow : Window
     {
-        public GameNetTCPIP GameCom { get; set; } = new GameNetTCPIP();
+        public GameNetTCPIP GameNetTCPIP { get; set; } = new GameNetTCPIP();
         public Engine Engine { get; set; } = new Engine();
         public InputBox InputBox { get; set; } = new InputBox();
-        public GameChatBox GameChatBox { get; set; } = new GameChatBox();
+        public ChatBox ChatBox { get; set; } = new ChatBox();
         public AudioHandler AudioHandler { get; set; } = new AudioHandler();
 
         int _lastClickedX = 0;
@@ -78,13 +78,13 @@ namespace BrainStorm
                     if (_iAmServer)
                     {
                         Engine.State.PointsPlayerA = Engine.State.PointsPlayerA + 1;
-                        chatBox = GameChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
+                        chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
                     }
 
                     else
                     {
                         Engine.State.PointsPlayerB = Engine.State.PointsPlayerB + 1;
-                        chatBox = GameChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
+                        chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
                     }
                 }
             }
@@ -92,10 +92,10 @@ namespace BrainStorm
             RenderRevealed();
 
             if (_iAmServer)
-                GameCom.GameServer.SendString(Engine.State.ToString());
+                GameNetTCPIP.GameServer.SendString(Engine.State.ToString());
 
             else
-                GameCom.GameClient.SendString(Engine.State.ToString());
+                GameNetTCPIP.GameClient.SendString(Engine.State.ToString());
         }
 
         private void RenderRevealed()
@@ -159,7 +159,7 @@ namespace BrainStorm
                         else if (_natoWavEnabled == true)
                             _natoWavEnabled = false;
                     
-                    chatBox = GameChatBox.Add(chatBox, InputBox.Text);
+                    chatBox = ChatBox.Add(chatBox, InputBox.Text);
                     InputBox.Text = "";
                     inputBox = InputBox.UpdateTextBox(inputBox);
 
@@ -174,18 +174,18 @@ namespace BrainStorm
                         _buttonsEnabled = false;
 
                         if (_iAmServer)
-                            chatBox = GameChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
+                            chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
                         else
-                            chatBox = GameChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
+                            chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
 
                         InputBox.OppTurn();
                         inputBox = InputBox.UpdateTextBox(inputBox);
 
                         if (_iAmServer)
-                            GameCom.GameServer.SendString(Engine.State.ToString());
+                            GameNetTCPIP.GameServer.SendString(Engine.State.ToString());
 
                         else
-                            GameCom.GameClient.SendString(Engine.State.ToString());
+                            GameNetTCPIP.GameClient.SendString(Engine.State.ToString());
                     }
 
                     else
@@ -197,11 +197,11 @@ namespace BrainStorm
 
                 else if (InputBox.Text.Contains("startserver"))
                 {
-                    GameCom.InitServer();
+                    GameNetTCPIP.InitServer();
                     _iAmServer = true;
 
                     if (_iAmServer)
-                        GameCom.GameServer.StringReceivedEvent += StringReceived;
+                        GameNetTCPIP.GameServer.StringReceivedEvent += StringReceived;
                     else
                         return;
 
@@ -210,25 +210,25 @@ namespace BrainStorm
 
                     //Thread.Sleep(1000);
                     _gameHasStarted = true;
-                    GameCom.GameServer.SendString("-GAME START-");
+                    GameNetTCPIP.GameServer.SendString("-GAME START-");
 
                     return;
                 }
 
                 else if (Helpers.IsValidIP(InputBox.Text) && (_gameHasStarted == false))
                 {
-                    GameCom.InitAndConnectClient(InputBox.Text);
+                    GameNetTCPIP.InitAndConnectClient(InputBox.Text);
                     _iAmServer = false;
 
                     if (_iAmServer == false)
-                        GameCom.GameClient.StringReceivedEvent += StringReceived;
+                        GameNetTCPIP.GameClient.StringReceivedEvent += StringReceived;
                     else
                         return;
 
                     inputBox.Text = "";
                     //Thread.Sleep(1000);
                     _gameHasStarted = true;
-                    GameCom.GameClient.SendString("-GAME START-");
+                    GameNetTCPIP.GameClient.SendString("-GAME START-");
 
                     return;
                 }
@@ -248,18 +248,18 @@ namespace BrainStorm
                         _buttonsEnabled = false;
 
                         if (_iAmServer)
-                            chatBox = GameChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
+                            chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
                         else
-                            chatBox = GameChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
+                            chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
 
                         InputBox.OppTurn();
                         inputBox = InputBox.UpdateTextBox(inputBox);
 
                         if (_iAmServer)
-                            GameCom.GameServer.SendString(Engine.State.ToString());
+                            GameNetTCPIP.GameServer.SendString(Engine.State.ToString());
 
                         else
-                            GameCom.GameClient.SendString(Engine.State.ToString());
+                            GameNetTCPIP.GameClient.SendString(Engine.State.ToString());
 
                         return;
                     }
@@ -267,18 +267,18 @@ namespace BrainStorm
                     Engine.BoardHandler = new BoardHandler(Engine.State);
                     Engine.BoardHandler.AddToBoard(InputBox.Text);
 
-                    chatBox = GameChatBox.Add(chatBox, InputBox.Text);
+                    chatBox = ChatBox.Add(chatBox, InputBox.Text);
 
                     if (_iAmServer)
                     {
-                        GameCom.GameServer.SendString(InputBox.Text);
-                        GameCom.GameServer.SendString(Engine.State.ToString());
+                        GameNetTCPIP.GameServer.SendString(InputBox.Text);
+                        GameNetTCPIP.GameServer.SendString(Engine.State.ToString());
                     }
 
                     else
                     {
-                        GameCom.GameClient.SendString(InputBox.Text);
-                        GameCom.GameClient.SendString(Engine.State.ToString());
+                        GameNetTCPIP.GameClient.SendString(InputBox.Text);
+                        GameNetTCPIP.GameClient.SendString(Engine.State.ToString());
                     }
 
                     InputBox.OppTurn();
@@ -302,15 +302,15 @@ namespace BrainStorm
                     Engine.State.LetterWasRevealed = false;
 
                     if (_iAmServer)
-                        GameCom.GameServer.SendString(Engine.State.ToString());
+                        GameNetTCPIP.GameServer.SendString(Engine.State.ToString());
 
                     else
-                        GameCom.GameClient.SendString(Engine.State.ToString());
+                        GameNetTCPIP.GameClient.SendString(Engine.State.ToString());
 
                     if (_iAmServer)
-                        chatBox = GameChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
+                        chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
                     else
-                        chatBox = GameChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
+                        chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
 
                     InputBox.OppTurn();
                     inputBox = InputBox.UpdateTextBox(inputBox);
@@ -348,7 +348,7 @@ namespace BrainStorm
 
         private void HandleReceiveString(string str)
         {
-            chatBox = GameChatBox.Add(chatBox, str);
+            chatBox = ChatBox.Add(chatBox, str);
         }
 
         private void HandleReceiveGameState(string str)
@@ -361,9 +361,9 @@ namespace BrainStorm
             if (Engine.State.Phase == "[PHASE2]")
             {
                 if (_iAmServer)
-                    chatBox = GameChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
+                    chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
                 else
-                    chatBox = GameChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
+                    chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
 
                 if (Engine.State.LetterWasRevealed == false)
                     _buttonsEnabled = true;
