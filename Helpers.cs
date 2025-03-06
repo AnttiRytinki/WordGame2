@@ -58,5 +58,28 @@ namespace BrainStorm
 
             return System.Net.IPAddress.TryParse(ip, out ipAddr);
         }
+
+        /// <summary>
+        /// Returns true if the game board coverage becomes above n letters if text would be added
+        /// </summary>
+        public static bool WillBoardCoverageBeAbove(State state, int n, string text)
+        {
+            int z = 0;
+
+            for (int x = 0; x < 10; x++)
+            {
+                for (int y = 0; y < 10; y++)
+                {
+                    if (state.Board[y][x] != ' ')
+                        ++z;
+                }
+            }
+
+            if ((z + text.Length) > n)
+                return true;
+
+            else
+                return false;
+        }
     }
 }
