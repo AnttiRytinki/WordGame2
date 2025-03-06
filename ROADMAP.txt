@@ -9,7 +9,9 @@ Score equation will be K/(C*T) where K is some constant to be determined,
 C is the number of button clicks made,
 and T is the time in milliseconds it took for the player to find all the words.
 
-Will add scrabble points for the letters?
+Will make it so arrow keys (or settings defined keys) can be
+used to select buttons,
+spacebar or enter will open seleccted button.
 
 Create defaults.cfg which says what your preferred defaults are.
 If on game start, defaults don't match the opponents, a prompt and chat is displayed for both players
