@@ -2,17 +2,17 @@
 
 namespace BrainStorm
 {
-    public class GameInputBox
+    public class InputBox
     {
         public SolidColorBrush Brush { get; set; } = Brushes.White;
         public string Text { get; set; } = "";
         public bool IsEnabled { get; set; } = true;
 
-        public GameInputBox()
+        public InputBox()
         {
         }
 
-        public GameInputBox(SolidColorBrush brush, string text, bool isEnabled)
+        public InputBox(SolidColorBrush brush, string text, bool isEnabled)
         {
             Brush = brush;
             Text = text;
