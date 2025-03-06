@@ -2,3 +2,5 @@
 Game should end when all words have been discovered.
 
 Non-Active player should not be able to type during phase 2.
+
+Last written word in phase 1 is sometimes not added to board.
