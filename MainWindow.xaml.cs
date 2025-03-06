@@ -144,7 +144,7 @@ namespace BrainStorm
 
         private void inputBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (_natoWavEnabled)
+            if (_natoWavEnabled && (AudioHandler.Initialized))
                 AudioHandler.PlayNATOAudio(e.Key);
 
             GameInput.HandleKeypress(e.Key);
@@ -155,12 +155,12 @@ namespace BrainStorm
                 GameInputBox.Brush = Brushes.White;
                 inputBox = GameInputBox.UpdateTextBox(inputBox);
 
-                if (GameInputBox.Text == $"%NATO")
+                if ((GameInputBox.Text == $"%NATO") && (AudioHandler.Initialized))
                 {
-                    if (_natoWavEnabled == false)
-                        _natoWavEnabled = true;
-                    else if (_natoWavEnabled == true)
-                        _natoWavEnabled = false;
+                        if (_natoWavEnabled == false)
+                            _natoWavEnabled = true;
+                        else if (_natoWavEnabled == true)
+                            _natoWavEnabled = false;
 
                     return;
                 }

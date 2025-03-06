@@ -23,10 +23,19 @@ namespace BrainStorm
     public class AudioHandler
     {
         public List<CachedSound> CachedSounds { get; set; } = new List<CachedSound>();
+        public bool Initialized { get; private set; } = false;
 
         public AudioHandler()
         {
-            Init();
+            try
+            {
+                Init();
+                Initialized = true;
+            }
+            catch
+            {
+                Initialized = false;
+            }
         }
 
         public void Init()
