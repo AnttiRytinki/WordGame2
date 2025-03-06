@@ -15,8 +15,6 @@ namespace BrainStorm
         public ChatBox ChatBox { get; set; } = new ChatBox();
         public AudioHandler AudioHandler { get; set; } = new AudioHandler();
 
-        bool _natoWavEnabled = false;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -127,8 +125,8 @@ namespace BrainStorm
 
         private void inputBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (_natoWavEnabled && (AudioHandler.Initialized))
-                AudioHandler.PlayNATOAudio(e.Key);
+            if (AudioHandler.Initialized)
+                AudioHandler.PlayNATOAudio(e.Key);      // Plays audio if AudioHandler.NATOWavEnabled
 
             if (e.Key == Key.Enter)
             {
@@ -138,10 +136,7 @@ namespace BrainStorm
 
                 if ((InputBox.Text == $"%NATO") && (AudioHandler.Initialized))
                 {
-                    if (_natoWavEnabled == false)
-                        _natoWavEnabled = true;
-                    else if (_natoWavEnabled == true)
-                        _natoWavEnabled = false;
+                    AudioHandler.ToggleNATOWavEnabled();
 
                     chatBox = ChatBox.Add(chatBox, InputBox.Text);
                     InputBox.Text = "";

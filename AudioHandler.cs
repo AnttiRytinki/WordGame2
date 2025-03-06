@@ -7,6 +7,8 @@ namespace BrainStorm
         public List<CachedSound> CachedSounds { get; set; } = new List<CachedSound>();
         public bool Initialized { get; private set; } = false;
 
+        public bool NATOWavEnabled { get; set; } = false;
+
         public AudioHandler()
         {
             try
@@ -61,14 +63,25 @@ namespace BrainStorm
             return null;
         }
 
+        public void ToggleNATOWavEnabled()
+        {
+            if (NATOWavEnabled == false)
+                NATOWavEnabled = true;
+            else if (NATOWavEnabled == true)
+                NATOWavEnabled = false;
+        }
+
         public void PlayNATOAudio(Key key)
         {
+            if (NATOWavEnabled == false)
+                return;
+
             try
             {
                 if (key == Key.A)
                     AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("ALPHA"));
                 else if (key == Key.B)
-                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("BETA"));
+                    AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("BRAVO"));
                 else if (key == Key.C)
                     AudioPlaybackEngine.Instance.PlaySound(GetSoundByName("CHARLIE"));
                 else if (key == Key.D)
