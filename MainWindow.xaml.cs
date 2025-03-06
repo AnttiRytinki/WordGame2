@@ -161,6 +161,10 @@ namespace BrainStorm
                             _natoWavEnabled = true;
                         else if (_natoWavEnabled == true)
                             _natoWavEnabled = false;
+                    
+                    chatBox = GameChatBox.Add(chatBox, GameInputBox.Text);
+                    GameInputBox.Text = "";
+                    inputBox = GameInputBox.UpdateTextBox(inputBox);
 
                     return;
                 }
