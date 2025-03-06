@@ -12,6 +12,7 @@ namespace BrainStorm
         public GameCom GameCom { get; set; } = new GameCom();
         public GameEngine GameEngine { get; set; } = new GameEngine();
         public GameInputBox GameInputBox { get; set; } = new GameInputBox();
+        public GameInput GameInput { get; set; } = new GameInput();
         public GameChatBox GameChatBox { get; set; } = new GameChatBox();
         public AudioHandler AudioHandler { get; set; } = new AudioHandler();
 
@@ -146,6 +147,8 @@ namespace BrainStorm
             if (_natoWavEnabled)
                 AudioHandler.PlayNATOAudio(e.Key);
 
+            GameInput.HandleKeypress(e.Key);
+
             if (e.Key == Key.Enter)
             {
                 GameInputBox.Text = ((TextBox)sender).Text;
@@ -204,7 +207,7 @@ namespace BrainStorm
                     GameInputBox.Text = "";
                     inputBox = GameInputBox.UpdateTextBox(inputBox);
 
-                    Thread.Sleep(1000);
+                    //Thread.Sleep(1000);
                     _gameHasStarted = true;
                     GameCom.GameServer.SendString("-GAME START-");
 
@@ -222,7 +225,7 @@ namespace BrainStorm
                         return;
 
                     inputBox.Text = "";
-                    Thread.Sleep(1000);
+                    //Thread.Sleep(1000);
                     _gameHasStarted = true;
                     GameCom.GameClient.SendString("-GAME START-");
 
