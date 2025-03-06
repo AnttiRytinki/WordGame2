@@ -15,13 +15,9 @@ namespace BrainStorm
         public ChatBox ChatBox { get; set; } = new ChatBox();
         public AudioHandler AudioHandler { get; set; } = new AudioHandler();
 
-        int _lastClickedX = 0;
-        int _lastClickedY = 0;
-
         bool _iAmServer = false;
         bool _gameHasStarted = false;
 
-        bool _buttonsEnabled = false;
         bool _natoWavEnabled = false;
 
         public MainWindow()
@@ -35,9 +31,6 @@ namespace BrainStorm
 
             if (File.Exists($"./settings.cfg") == false)
                 InitSettingsCfg();
-
-            Engine.State = new State();
-            Engine.BoardHandler = new BoardHandler(Engine.State);
         }
 
         private void InitSettingsCfg()
@@ -48,7 +41,7 @@ namespace BrainStorm
 
         private void Button_Click(object sender, MouseButtonEventArgs e)
         {
-            if (_buttonsEnabled == false)
+            if (Engine.ButtonsEnabled == false)
                 return;
 
             InputBox.OppTurn();
@@ -58,14 +51,13 @@ namespace BrainStorm
             int x = int.Parse(buttonName[1].ToString());
             int y = int.Parse(buttonName[2].ToString());
 
-            _lastClickedX = x;
-            _lastClickedY = y;
+            Engine.LastClickedX = x;
+            Engine.LastClickedY = y;
 
-            _buttonsEnabled = false;
+            Engine.ButtonsEnabled = false;
             bool wordWasRevealed = false;
-            bool letterWasRevealed = Engine.State.Reveal(x, y, out wordWasRevealed);
 
-            if (letterWasRevealed)
+            if (Engine.State.Reveal(x, y, out wordWasRevealed))
             {
                 InputBox.MyTurn();
                 inputBox = InputBox.UpdateTextBox(inputBox);
@@ -171,7 +163,7 @@ namespace BrainStorm
                     if (Engine.State.Phase == "[PHASE2]")
                     {
                         Engine.State.LetterWasRevealed = false;
-                        _buttonsEnabled = false;
+                        Engine.ButtonsEnabled = false;
 
                         if (_iAmServer)
                             chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
@@ -235,17 +227,15 @@ namespace BrainStorm
 
                 else if (Engine.State.Phase == "[PHASE1]")
                 {
-                    bool canAddToBoard = Engine.BoardHandler.CanAddToBoard(InputBox.Text);
-
                     using (StreamWriter sw = File.AppendText($"./memory.txt"))
                     {
                         sw.WriteLine(System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " --- " + InputBox.Text + "\n");
                     }
 
-                    if (canAddToBoard == false || WillBoardCoverageBeAbove(50, InputBox.Text))
+                    if ((Engine.BoardHandler.CanAddToBoard(InputBox.Text) == false) || WillBoardCoverageBeAbove(50, InputBox.Text))
                     {
                         Engine.State.Phase = "[PHASE2]";
-                        _buttonsEnabled = false;
+                        Engine.ButtonsEnabled = false;
 
                         if (_iAmServer)
                             chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerA, Engine.State.PointsPlayerB);
@@ -287,9 +277,9 @@ namespace BrainStorm
 
                 else if (Engine.State.Phase == "[PHASE2]")
                 {
-                    if (Engine.State.GetWord(_lastClickedX, _lastClickedY).TheWord == InputBox.Text)
+                    if (Engine.State.GetWord(Engine.LastClickedX, Engine.LastClickedY).TheWord == InputBox.Text)
                     {
-                        Engine.State.RevealWord(_lastClickedX, _lastClickedY);
+                        Engine.State.RevealWord(Engine.LastClickedX, Engine.LastClickedY);
                         RenderRevealed();
 
                         if (_iAmServer)
@@ -366,7 +356,7 @@ namespace BrainStorm
                     chatBox = ChatBox.ShowGamePoints(chatBox, Engine.State.PointsPlayerB, Engine.State.PointsPlayerA);
 
                 if (Engine.State.LetterWasRevealed == false)
-                    _buttonsEnabled = true;
+                    Engine.ButtonsEnabled = true;
             }
 
             if (Engine.State.LetterWasRevealed == false || Engine.State.WordWasRevealed == true)

@@ -8,6 +8,11 @@
         public State State { get; set; }
         public BoardHandler BoardHandler { get; set; }
 
+        public int LastClickedX { get; set; } = -1;
+        public int LastClickedY { get; set; } = -1;
+
+        public bool ButtonsEnabled { get; set; } = false;
+
         public Engine() 
         {
             State = new State();
