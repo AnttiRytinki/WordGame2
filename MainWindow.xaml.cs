@@ -43,16 +43,14 @@ namespace BrainStorm
             inputBox = InputBox.UpdateTextBox(inputBox);
 
             string buttonName = ((Button)sender).Name;
-            int x = int.Parse(buttonName[1].ToString());
-            int y = int.Parse(buttonName[2].ToString());
 
-            Engine.LastClickedX = x;
-            Engine.LastClickedY = y;
+            Engine.LastClickedX = int.Parse(buttonName[1].ToString());
+            Engine.LastClickedY = int.Parse(buttonName[2].ToString());
 
             Engine.ButtonsEnabled = false;
             bool wordWasRevealed = false;
 
-            if (Engine.State.Reveal(x, y, out wordWasRevealed))
+            if (Engine.State.Reveal(Engine.LastClickedX, Engine.LastClickedY, out wordWasRevealed))
             {
                 InputBox.MyTurn();
                 inputBox = InputBox.UpdateTextBox(inputBox);
