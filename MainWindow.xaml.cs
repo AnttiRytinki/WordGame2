@@ -132,6 +132,11 @@ namespace BrainStorm
                 InputBox.Brush = Brushes.White;
                 inputBox = InputBox.UpdateTextBox(inputBox);
 
+                // Only accept valid IP or "%startserver" if game hasn't started
+                if (Engine.GameHasStarted == false)
+                    if ((Helpers.IsValidIP(InputBox.Text) == false) && ((InputBox.Text == $"%startserver") == false))
+                        return;
+
                 if ((InputBox.Text == $"%NATO") && (AudioHandler.Initialized))
                 {
                     AudioHandler.ToggleNATOWavEnabled();
