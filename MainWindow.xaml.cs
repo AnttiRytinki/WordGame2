@@ -123,6 +123,18 @@ namespace BrainStorm
 
         private void inputBox_KeyDown(object sender, KeyEventArgs e)
         {
+            if (Engine.GameHasStarted && (Engine.State.Phase == "[PHASE1]") && (e.Key != Key.Enter))
+            {
+                InputBox.Text = ((TextBox)sender).Text;
+
+                if (Engine.BoardHandler.CanAddToBoard(InputBox.Text))
+                    InputBox.Brush = Brushes.White;
+                else
+                    InputBox.Brush = Brushes.Red;
+
+                inputBox = InputBox.UpdateTextBox(inputBox);
+            }
+
             if (AudioHandler.Initialized)
                 AudioHandler.PlayNATOAudio(e.Key);      // Plays audio if AudioHandler.NATOWavEnabled
 
