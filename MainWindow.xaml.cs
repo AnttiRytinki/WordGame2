@@ -147,7 +147,7 @@ namespace BrainStorm
             if (_natoWavEnabled && (AudioHandler.Initialized))
                 AudioHandler.PlayNATOAudio(e.Key);
 
-            GameInput.HandleKeypress(e.Key);
+            //GameInput.HandleKeypress(e.Key);
 
             if (e.Key == Key.Enter)
             {
