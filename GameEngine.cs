@@ -5,13 +5,13 @@
         // Else in Online Mode
         public bool SoloMode { get; set; } = false;
 
-        public GameState GameState { get; set; }
+        public State State { get; set; }
         public BoardHandler BoardHandler { get; set; }
 
         public GameEngine() 
         {
-            GameState = new GameState();
-            BoardHandler = new BoardHandler(GameState);
+            State = new State();
+            BoardHandler = new BoardHandler(State);
         }
     }
 }
