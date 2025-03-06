@@ -11,6 +11,8 @@
         public int LastClickedX { get; set; } = -1;
         public int LastClickedY { get; set; } = -1;
 
+        public bool WordWasRevealed { get; set; } = false;
+
         public bool ButtonsEnabled { get; set; } = false;
         public bool GameHasStarted { get; set; } = false;
 

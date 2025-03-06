@@ -140,12 +140,11 @@ namespace BrainStorm
             RevealedBoard = Board;
         }
 
-        public bool Reveal(int x, int y, out bool wordWasRevealed)
+        public bool Reveal(int x, int y)
         {
             if (Board[y][x] == ' ')
             {
                 RevealedBoard[y] = Helpers.ReplaceAt(RevealedBoard[y], x, '#');
-                wordWasRevealed = false;
                 WordWasRevealed = false;
 
                 return false;
@@ -156,7 +155,6 @@ namespace BrainStorm
                 LetterWasRevealed = true;
                 RevealedBoard[y] = Helpers.ReplaceAt(RevealedBoard[y], x, Board[y][x]);
 
-                wordWasRevealed = true;
                 WordWasRevealed = true;
                 var word = GetWord(x, y);
 
@@ -165,10 +163,7 @@ namespace BrainStorm
                     for (int xx = word.X; xx < word.X + word.TheWord.Length; xx++)
                     {
                         if (RevealedBoard[y][xx] != word.TheWord[xx - word.X])
-                        {
-                            wordWasRevealed = false;
                             WordWasRevealed = false;
-                        }
                     }
                 }
 
@@ -177,10 +172,7 @@ namespace BrainStorm
                     for (int yy = word.Y; yy < word.Y + word.TheWord.Length; yy++)
                     {
                         if (RevealedBoard[yy][x] != word.TheWord[yy - word.Y])
-                        {
-                            wordWasRevealed = false;
                             WordWasRevealed = false;
-                        }
                     }
                 }
 
@@ -224,13 +216,13 @@ namespace BrainStorm
                 if (foundWord.Direction == Direction.Horizontal)
                 {
                     for (int xx = foundWord.X; xx < foundWord.X + foundWord.TheWord.Length; xx++)
-                        Reveal(xx, y, out bool b);
+                        Reveal(xx, y);
                 }
 
                 if (foundWord.Direction == Direction.Vertical)
                 {
                     for (int yy = foundWord.Y; yy < foundWord.Y + foundWord.TheWord.Length; yy++)
-                        Reveal(x, yy, out bool b);
+                        Reveal(x, yy);
                 }
             }
         }

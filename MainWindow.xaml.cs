@@ -48,14 +48,14 @@ namespace BrainStorm
             Engine.LastClickedY = int.Parse(buttonName[2].ToString());
 
             Engine.ButtonsEnabled = false;
-            bool wordWasRevealed = false;
+            Engine.State.WordWasRevealed = false;
 
-            if (Engine.State.Reveal(Engine.LastClickedX, Engine.LastClickedY, out wordWasRevealed))
+            if (Engine.State.Reveal(Engine.LastClickedX, Engine.LastClickedY))
             {
                 InputBox.MyTurn();
                 inputBox = InputBox.UpdateTextBox(inputBox);
 
-                if (wordWasRevealed)
+                if (Engine.State.WordWasRevealed)
                 {
                     InputBox.OppTurn();
                     inputBox = InputBox.UpdateTextBox(inputBox);
