@@ -5,7 +5,7 @@
         // Else in Online Mode
         public bool SoloMode { get; set; } = false;
 
-        public State State { get; set; }
+        public GameState State { get; set; }
         public BoardHandler BoardHandler { get; set; }
 
         public int LastClickedX { get; set; } = -1;
@@ -18,7 +18,7 @@
 
         public Engine() 
         {
-            State = new State();
+            State = new GameState();
             BoardHandler = new BoardHandler(State);
         }
     }

@@ -293,7 +293,7 @@ namespace BrainStorm
 
         private void HandleReceiveGameState(string str)
         {
-            Engine.State = new State();
+            Engine.State = new GameState();
             Engine.State.FromString(str);
             //GameState.RevealAll();
             RenderRevealed();

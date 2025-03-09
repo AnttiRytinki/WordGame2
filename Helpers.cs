@@ -62,7 +62,7 @@ namespace BrainStorm
         /// <summary>
         /// Returns true if the game board coverage becomes above n letters if text would be added
         /// </summary>
-        public static bool WillBoardCoverageBeAbove(State state, int n, string text)
+        public static bool WillBoardCoverageBeAbove(GameState state, int n, string text)
         {
             int z = 0;
 

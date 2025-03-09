@@ -4,9 +4,9 @@ namespace BrainStorm
 {
     public class BoardHandler
     {
-        public State GameState { get; set; }
+        public GameState GameState { get; set; }
 
-        public BoardHandler(State gameState)
+        public BoardHandler(GameState gameState)
         {
             GameState = gameState;
         }

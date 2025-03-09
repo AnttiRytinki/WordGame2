@@ -2,7 +2,7 @@
 
 namespace BrainStorm
 {
-    public class State
+    public class GameState
     {
         public List<string> Board { get; set; } = new List<string>();
         public List<string> RevealedBoard { get; set; } = new List<string>();
@@ -15,7 +15,7 @@ namespace BrainStorm
         public bool LetterWasRevealed { get; set; } = false;
         public bool WordWasRevealed { get; set; } = false;
 
-        public State()
+        public GameState()
         {
             Init();
         }
